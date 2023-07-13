@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.categories.MainCategoryFragment">
+
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <ProgressBar
+               android:id="@+id/progressBar"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvSpecialProducts"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_margin="@dimen/_10sdp"
+               android:visibility="invisible"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"/>
+           <TextView
+               android:id="@+id/tvBestDeals"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Best Deals"
+               android:textSize="@dimen/_22ssp"
+               android:textColor="@color/black"
+               android:textStyle="bold"
+               android:visibility="invisible"
+               app:layout_constraintTop_toBottomOf="@+id/rvSpecialProducts"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               android:layout_marginTop="@dimen/_10sdp"/>
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvBestDeals"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_margin="@dimen/_10sdp"
+               android:visibility="invisible"
+               app:layout_constraintTop_toBottomOf="@+id/tvBestDeals"
+               app:layout_constraintStart_toStartOf="@id/rvSpecialProducts"/>
+           <TextView
+               android:id="@+id/tvBestProducts"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Best Products"
+               android:textSize="@dimen/_22ssp"
+               android:textColor="@color/black"
+               android:textStyle="bold"
+               android:visibility="invisible"
+               app:layout_constraintTop_toBottomOf="@+id/rvBestDeals"
+               app:layout_constraintStart_toStartOf="@id/rvBestDeals"
+               android:layout_marginTop="@dimen/_10sdp"/>
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvBestProducts"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_margin="@dimen/_10sdp"
+               android:visibility="invisible"
+               app:layout_constraintTop_toBottomOf="@+id/tvBestProducts"
+               app:layout_constraintStart_toStartOf="@id/rvSpecialProducts"/>
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
