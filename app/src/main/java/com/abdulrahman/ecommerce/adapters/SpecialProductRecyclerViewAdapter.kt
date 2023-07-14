@@ -8,7 +8,8 @@ import com.abdulrahman.ecommerce.data.Product
 import com.abdulrahman.ecommerce.databinding.SpecialProductRvItemBinding
 import com.bumptech.glide.Glide
 
-class SpecialProductRecyclerViewAdapter () : RecyclerView.Adapter<SpecialProductRecyclerViewAdapter.ProductViewHolder>() {
+class SpecialProductRecyclerViewAdapter (private val onClickListener: OnClickListener)
+    : RecyclerView.Adapter<SpecialProductRecyclerViewAdapter.ProductViewHolder>() {
 
     private var items: List<Product> = emptyList()
 
@@ -32,6 +33,9 @@ class SpecialProductRecyclerViewAdapter () : RecyclerView.Adapter<SpecialProduct
                 Glide.with(itemView).load(product.images[0]).into(tvProductImage)
                 tvProductName.text = product.name
                 tvProductPrice.text = "$ ${product.price.toString()}"
+                root.setOnClickListener {
+                    onClickListener.onClick(product)
+                }
             }
 
         }
@@ -69,5 +73,7 @@ class SpecialProductRecyclerViewAdapter () : RecyclerView.Adapter<SpecialProduct
             return oldProductList[oldItemPosition] == newProductList[newItemPosition]
         }
     }
-
+    class OnClickListener(val clickListener: (product: Product) -> Unit) {
+        fun onClick(product: Product) = clickListener(product)
+    }
 }

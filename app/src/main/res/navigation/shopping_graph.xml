@@ -25,7 +25,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="com.abdulrahman.ecommerce.fragments.ProductDetailsFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.product.ProductDetailsFragment"
         android:label="fragment_product"
         tools:layout="@layout/fragment_product" >
         <argument

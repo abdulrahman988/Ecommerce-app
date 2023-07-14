@@ -11,8 +11,10 @@ import android.widget.GridLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.BestDealsRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.BestProductRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.SpecialProductRecyclerViewAdapter
@@ -106,12 +108,19 @@ class MainCategoryFragment : Fragment() {
         }
 
 
-
-
     }
 
     private fun setupSpecialProductRecyclerView() {
-        specialProductsAdapter = SpecialProductRecyclerViewAdapter()
+        specialProductsAdapter =
+            SpecialProductRecyclerViewAdapter(SpecialProductRecyclerViewAdapter.OnClickListener {
+
+                val bundle = Bundle().apply {
+                    putParcelable("product", it)
+                }
+                findNavController().navigate(
+                    R.id.action_homeFragment_to_productDetailsFragment, bundle
+                )
+            })
         binding.rvSpecialProducts.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -120,7 +129,15 @@ class MainCategoryFragment : Fragment() {
     }
 
     private fun setupBestDealsRecyclerView() {
-        bestDealsAdapter = BestDealsRecyclerViewAdapter()
+        bestDealsAdapter =
+            BestDealsRecyclerViewAdapter(BestDealsRecyclerViewAdapter.OnClickListener {
+                val bundle = Bundle().apply {
+                    putParcelable("product", it)
+                }
+                findNavController().navigate(
+                    R.id.action_homeFragment_to_productDetailsFragment, bundle
+                )
+            })
         binding.rvBestDeals.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -129,10 +146,18 @@ class MainCategoryFragment : Fragment() {
     }
 
     private fun setupBestProductsRecyclerView() {
-        bestProductsAdapter = BestProductRecyclerViewAdapter()
+        bestProductsAdapter =
+            BestProductRecyclerViewAdapter(BestProductRecyclerViewAdapter.OnClickListener {
+                val bundle = Bundle().apply {
+                    putParcelable("product", it)
+                }
+                findNavController().navigate(
+                    R.id.action_homeFragment_to_productDetailsFragment, bundle
+                )
+            })
         binding.rvBestProducts.apply {
             layoutManager =
-                    GridLayoutManager(requireContext(),2,GridLayoutManager.VERTICAL,false)
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
             adapter = bestProductsAdapter
         }
     }

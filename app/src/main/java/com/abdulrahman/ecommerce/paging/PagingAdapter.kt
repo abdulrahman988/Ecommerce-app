@@ -12,7 +12,8 @@ import com.abdulrahman.ecommerce.data.Product
 import com.abdulrahman.ecommerce.databinding.CategoryProductRvItemBinding
 import com.bumptech.glide.Glide
 
-class PagingAdapter: PagingDataAdapter<Product, PagingAdapter.ProductViewHolder>(Companion) {
+class PagingAdapter(private val onClickListener: OnClickListener)
+    : PagingDataAdapter<Product, PagingAdapter.ProductViewHolder>(Companion) {
     companion object : DiffUtil.ItemCallback<Product>(){
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
@@ -57,10 +58,16 @@ class PagingAdapter: PagingDataAdapter<Product, PagingAdapter.ProductViewHolder>
                     tvProductDiscountedPriceCategory.visibility = View.INVISIBLE
                 }
 
-
+                root.setOnClickListener {
+                    onClickListener.onClick(product)
+                }
             }
 
         }
+    }
+
+    class OnClickListener(val clickListener: (product: Product) -> Unit) {
+        fun onClick(product: Product) = clickListener(product)
     }
 
 

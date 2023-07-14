@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.ProductDetailsFragment">
+    tools:context=".fragments.product.ProductDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/productImage"
+            android:id="@+id/ivProductImage"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_200sdp"
             android:scaleType="fitCenter"
@@ -27,11 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/close_icon"
-            app:layout_constraintStart_toStartOf="@+id/productImage"
+            app:layout_constraintStart_toStartOf="@+id/ivProductImage"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/productName"
+            android:id="@+id/tvProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Product Name"
@@ -39,7 +39,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productImage" />
+            app:layout_constraintTop_toBottomOf="@+id/ivProductImage" />
 
         <TextView
             android:id="@+id/productPrice"
@@ -50,7 +50,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
 
         <TextView
             android:id="@+id/productOfferPercentage"

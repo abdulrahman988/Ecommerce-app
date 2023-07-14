@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,7 +53,14 @@ class LaptopCategoryFragment : Fragment() {
 
 
     private fun setupProductRecyclerView() {
-        laptopAdapter = PagingAdapter()
+        laptopAdapter = PagingAdapter(PagingAdapter.OnClickListener {
+            val bundle = Bundle().apply {
+                putParcelable("product", it)
+            }
+            findNavController().navigate(
+                R.id.action_homeFragment_to_productDetailsFragment, bundle
+            )
+        })
         binding.rvLaptop.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

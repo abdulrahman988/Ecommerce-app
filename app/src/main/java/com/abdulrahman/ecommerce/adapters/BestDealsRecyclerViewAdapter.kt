@@ -9,7 +9,7 @@ import com.abdulrahman.ecommerce.data.Product
 import com.abdulrahman.ecommerce.databinding.BestDealsRvItemBinding
 import com.bumptech.glide.Glide
 
-class BestDealsRecyclerViewAdapter() :
+class BestDealsRecyclerViewAdapter(private val onClickListener: OnClickListener) :
     RecyclerView.Adapter<BestDealsRecyclerViewAdapter.BestDealViewHolder>() {
 
     private var items: List<Product> = emptyList()
@@ -40,6 +40,9 @@ class BestDealsRecyclerViewAdapter() :
                 val discounted = (product.offerPercentage?.times(product.price))!! /100
 
                 tvProductDiscountedPrice.text = "$ ${String.format("%.2f",(product.price - discounted))}"
+                root.setOnClickListener {
+                    onClickListener.onClick(product)
+                }
             }
         }
     }
@@ -75,5 +78,7 @@ class BestDealsRecyclerViewAdapter() :
             return oldProductList[oldItemPosition] == newProductList[newItemPosition]
         }
     }
-
+    class OnClickListener(val clickListener: (product: Product) -> Unit) {
+        fun onClick(product: Product) = clickListener(product)
+    }
 }

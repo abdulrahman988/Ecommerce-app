@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.databinding.FragmentMainCategoryBinding
@@ -24,7 +25,6 @@ class MobileCategoryFragment : Fragment() {
     private lateinit var mobileAdapter: PagingAdapter
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -39,17 +39,24 @@ class MobileCategoryFragment : Fragment() {
         setupProductRecyclerView()
 
         lifecycleScope.launch {
-            viewModel.mobile.collect{
+            viewModel.mobile.collect {
                 mobileAdapter.submitData(it)
             }
         }
 
 
-
     }
 
     private fun setupProductRecyclerView() {
-        mobileAdapter = PagingAdapter()
+        mobileAdapter = PagingAdapter(PagingAdapter.OnClickListener {
+            val bundle = Bundle().apply {
+                putParcelable("product", it)
+            }
+            findNavController().navigate(
+                R.id.action_homeFragment_to_productDetailsFragment,
+                bundle
+            )
+        })
         binding.rvMobile.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
