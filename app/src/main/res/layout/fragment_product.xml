@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.product.ProductDetailsFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_10sdp">
 
-            <ImageView
-                android:id="@+id/ivProductImage"
+            <!-- Existing views for product details -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvImage"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_300sdp"
-                android:src="@drawable/placeholder_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="8dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintVertical_bias="0.2" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.2">
+
+                <ImageView
+                    android:id="@+id/ivProductImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/placeholder_image" />
+            </androidx.cardview.widget.CardView>
 
             <ImageView
                 android:id="@+id/ivClose"
@@ -32,43 +43,43 @@
                 android:src="@drawable/close_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/tvProductName"
+                style="@style/product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Name"
                 android:textColor="@color/black"
-                style="@style/product_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivProductImage" />
+                app:layout_constraintTop_toBottomOf="@+id/cvImage" />
 
             <TextView
                 android:id="@+id/productPrice"
+                style="@style/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Price"
-                style="@style/product_price"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
 
             <TextView
                 android:id="@+id/productOfferPercentage"
+                style="@style/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Offer Percentage"
                 android:textColor="@color/g_red"
-                style="@style/product_price"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/productPrice" />
 
             <TextView
                 android:id="@+id/productDiscountedPrice"
+                style="@style/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Discounted Price"
-                style="@style/product_price"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/productOfferPercentage" />
 
@@ -94,25 +105,66 @@
 
             <TextView
                 android:id="@+id/productDescription"
+                style="@style/product_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Product Description"
-                style="@style/product_description"
                 android:gravity="fill_horizontal"
+                android:text="Product Description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/productDiscountedPrice" />
 
+            <LinearLayout
+                android:id="@+id/quantityControlsContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/productColor"
+                app:layout_constraintVertical_bias="0.0">
+
+                <ImageButton
+                    android:id="@+id/btnDecreaseQuantity"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/white_background"
+                    android:contentDescription="Decrease Quantity"
+                    android:padding="8dp"
+                    android:src="@drawable/minus_icon" />
+
+                <TextView
+                    android:id="@+id/productQuantityValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/btnIncreaseQuantity"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/white_background"
+                    android:contentDescription="Increase Quantity"
+                    android:padding="8dp"
+                    android:src="@drawable/plus_icon" />
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btnAddToCart"
+                style="@style/blueButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add to cart"
-                style="@style/blueButtonStyle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/productColor" />
+                app:layout_constraintTop_toBottomOf="@+id/quantityControlsContainer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>
