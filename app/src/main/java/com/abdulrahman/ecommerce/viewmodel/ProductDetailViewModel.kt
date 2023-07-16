@@ -3,10 +3,10 @@ package com.abdulrahman.ecommerce.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdulrahman.ecommerce.data.CartProduct
+import com.abdulrahman.ecommerce.util.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.abdulrahman.ecommerce.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -47,16 +47,18 @@ class ProductDetailViewModel @Inject constructor(
                             db.runTransaction { transition ->
                                 val documentId = it.first().id
                                 val documentRef =
-                                    db.collection("user").document(auth.uid!!).collection("cart")
+                                    db.collection("user")
+                                        .document(auth.uid!!)
+                                        .collection("cart")
                                         .document(documentId)
-                                val document = transition.get(documentRef)
-                                val productObject = document.toObject(CartProduct::class.java)
 
-                                productObject?.let { cartProduct ->
-                                    val newQuantity = cartProduct.quantity + 1
-                                    val newProductObject = cartProduct.copy(quantity = newQuantity)
-                                    transition.set(documentRef, newProductObject)
-                                }
+                                val newQuantity = cartProduct.quantity + 1
+                                transition.update(documentRef,"quantity",newQuantity)
+//                                productObject?.let { cartProduct ->
+//                                    val newQuantity = cartProduct.quantity + 1
+//                                    val newProductObject = cartProduct.copy(quantity = newQuantity)
+//                                    transition.set(documentRef, newProductObject)
+//                                }
                             }.addOnFailureListener {
                                 viewModelScope.launch {
                                     _addToCart.emit(Resource.Error(it.message.toString()))
