@@ -34,28 +34,26 @@ class ProductDetailViewModel @Inject constructor(
                 it.documents.let {
                     if (it.isEmpty()) {
                         //the product is not in the cart first time added
-
-
+                        db.collection("user").document(auth.uid!!).collection("cart").document().set(cartProduct)
                     } else {
                         //the product is already in the cart so we increase the quantity
                         val product = it.first().toObject(cartProduct::class.java)
                         if (product == cartProduct){
                             //increase the quantity
 
+
+
                         }else{
                             //add the product
+                            db.collection("user").document(auth.uid!!).collection("cart").document().set(cartProduct)
 
                         }
-
                     }
                 }
-
             }.addOnFailureListener {
                 viewModelScope.launch {
                     _addToCart.emit(Resource.Error(it.message))
                 }
             }
     }
-
-
 }
