@@ -14,8 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
-    val auth: FirebaseAuth,
-    val db: FirebaseFirestore
+    val auth: FirebaseAuth, val db: FirebaseFirestore
 ) : ViewModel() {
 
     private val _addToCart = MutableStateFlow<Resource<CartProduct>>(Resource.Unspecified())
@@ -25,27 +24,57 @@ class ProductDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _addToCart.emit(Resource.Loading())
         }
-        db.collection("user")
-            .document(auth.uid!!)
-            .collection("cart")
-            .whereEqualTo("product.id", cartProduct.product.id)
-            .get()
-            .addOnSuccessListener {
+        db.collection("user").document(auth.uid!!).collection("cart")
+            .whereEqualTo("product.id", cartProduct.product.id).get().addOnSuccessListener {
                 it.documents.let {
                     if (it.isEmpty()) {
-                        //the product is not in the cart first time added
-                        db.collection("user").document(auth.uid!!).collection("cart").document().set(cartProduct)
+                        //the cart is empty there is no products in the cart
+                        db.collection("user").document(auth.uid!!).collection("cart").document()
+                            .set(cartProduct).addOnSuccessListener {
+                                viewModelScope.launch {
+                                    _addToCart.emit(Resource.Success(cartProduct))
+                                }
+                            }.addOnFailureListener {
+                                viewModelScope.launch {
+                                    _addToCart.emit(Resource.Error(it.message.toString()))
+                                }
+                            }
                     } else {
-                        //the product is already in the cart so we increase the quantity
+                        //the cart is not empty and there is one product or more in the cart
                         val product = it.first().toObject(cartProduct::class.java)
-                        if (product == cartProduct){
+                        if (product == cartProduct) {
                             //increase the quantity
+                            db.runTransaction { transition ->
+                                val documentId = it.first().id
+                                val documentRef =
+                                    db.collection("user").document(auth.uid!!).collection("cart")
+                                        .document(documentId)
+                                val document = transition.get(documentRef)
+                                val productObject = document.toObject(CartProduct::class.java)
 
+                                productObject?.let { cartProduct ->
+                                    val newQuantity = cartProduct.quantity + 1
+                                    val newProductObject = cartProduct.copy(quantity = newQuantity)
+                                    transition.set(documentRef, newProductObject)
+                                }
+                            }.addOnFailureListener {
+                                viewModelScope.launch {
+                                    _addToCart.emit(Resource.Error(it.message.toString()))
+                                }
+                            }
 
-
-                        }else{
-                            //add the product
-                            db.collection("user").document(auth.uid!!).collection("cart").document().set(cartProduct)
+                        } else {
+                            //the cart is not empty and there is no product
+                            db.collection("user").document(auth.uid!!).collection("cart").document()
+                                .set(cartProduct).addOnSuccessListener {
+                                    viewModelScope.launch {
+                                        _addToCart.emit(Resource.Success(cartProduct))
+                                    }
+                                }.addOnFailureListener {
+                                    viewModelScope.launch {
+                                        _addToCart.emit(Resource.Error(it.message.toString()))
+                                    }
+                                }
 
                         }
                     }
