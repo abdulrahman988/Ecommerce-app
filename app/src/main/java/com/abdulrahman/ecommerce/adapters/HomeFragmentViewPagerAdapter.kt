@@ -10,7 +10,6 @@ import com.abdulrahman.ecommerce.fragments.categories.LaptopCategoryFragment
 import com.abdulrahman.ecommerce.fragments.categories.MainCategoryFragment
 import com.abdulrahman.ecommerce.fragments.categories.MobileCategoryFragment
 import com.abdulrahman.ecommerce.fragments.categories.TvCategoryFragment
-import dagger.hilt.android.ViewModelLifecycle
 
 class HomeFragmentViewPagerAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager,lifecycle) {
 
