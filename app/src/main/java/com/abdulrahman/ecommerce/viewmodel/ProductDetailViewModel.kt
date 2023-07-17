@@ -41,8 +41,8 @@ class ProductDetailViewModel @Inject constructor(
                             }
                     } else {
                         //the cart is not empty and there is one product or more in the cart
-                        val product = it.first().toObject(cartProduct::class.java)
-                        if (product == cartProduct) {
+                        val cartProductStored = it.first().toObject(cartProduct::class.java)
+                        if (cartProductStored?.product?.id == cartProduct.product.id) {
                             //increase the quantity
                             db.runTransaction { transition ->
                                 val documentId = it.first().id

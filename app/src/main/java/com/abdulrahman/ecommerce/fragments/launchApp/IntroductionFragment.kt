@@ -28,17 +28,18 @@ class IntroductionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-//        val firebaseAuth = FirebaseAuth.getInstance()
+        val firebaseAuth = FirebaseAuth.getInstance()
 
-//        binding.buttonIntroduction.setOnClickListener {
-//            if (firebaseAuth.currentUser != null){
-//                startActivity(Intent(requireActivity(), ShoppingActivity::class.java))
-//            }else{
-//                findNavController().navigate(R.id.action_introductionFragment_to_acountOptionsFragment)
-//
-//            }
-            findNavController().navigate(R.id.action_introductionFragment_to_acountOptionsFragment)
+        binding.buttonIntroduction.setOnClickListener {
+            if (firebaseAuth.currentUser != null) {
+                startActivity(Intent(requireActivity(), ShoppingActivity::class.java))
+            } else {
+                findNavController().navigate(R.id.action_introductionFragment_to_acountOptionsFragment)
+
+            }
+//            findNavController().navigate(R.id.action_introductionFragment_to_acountOptionsFragment)
 
         }
 
     }
+}

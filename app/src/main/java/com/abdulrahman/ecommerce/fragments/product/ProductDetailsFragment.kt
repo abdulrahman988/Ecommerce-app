@@ -17,9 +17,10 @@ import com.abdulrahman.ecommerce.databinding.FragmentProductBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.ProductDetailViewModel
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
     private val args: ProductDetailsFragmentArgs by navArgs()
