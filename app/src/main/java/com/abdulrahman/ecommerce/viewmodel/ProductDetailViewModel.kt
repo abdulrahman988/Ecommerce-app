@@ -87,4 +87,11 @@ class ProductDetailViewModel @Inject constructor(
                 }
             }
     }
+
+    private fun increaseQuantity(){
+
+    }
+    private fun decreaseQuantity(){
+
+    }
 }

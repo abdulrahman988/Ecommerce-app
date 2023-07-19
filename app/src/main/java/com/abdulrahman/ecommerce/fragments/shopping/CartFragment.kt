@@ -5,13 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.abdulrahman.ecommerce.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.abdulrahman.ecommerce.adapters.CartRecyclerViewAdapter
 import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
-import com.abdulrahman.ecommerce.databinding.FragmentHomeBinding
+import com.abdulrahman.ecommerce.util.Resource
+import com.abdulrahman.ecommerce.viewmodel.CartViewModel
+import com.abdulrahman.ecommerce.viewmodel.MainCategoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 
 class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
+    private lateinit var cartRecyclerview: CartRecyclerViewAdapter
+    private val viewModel by viewModels<CartViewModel>()
 
 
     override fun onCreateView(
@@ -24,7 +36,34 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getCartProduct()
+        setupRecyclerView()
+
+        lifecycleScope.launch {
+            viewModel.cartProduct.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        cartRecyclerview.submitList(it.data!!)
+                    }
+
+                    is Resource.Error -> {
+                        Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
 
 
+    }
+
+    private fun setupRecyclerView() {
+        cartRecyclerview = CartRecyclerViewAdapter()
+        binding.rvCart.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = cartRecyclerview
+        }
     }
 }
