@@ -15,7 +15,14 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_10sdp">
 
-            <!-- Existing views for product details -->
+            <ImageView
+                android:id="@+id/ivClose"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/close_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvImage"
                 android:layout_width="0dp"
@@ -26,8 +33,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.2">
+                app:layout_constraintTop_toBottomOf="@id/ivClose">
 
                 <ImageView
                     android:id="@+id/ivProductImage"
@@ -35,15 +41,6 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/placeholder_image" />
             </androidx.cardview.widget.CardView>
-
-            <ImageView
-                android:id="@+id/ivClose"
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:src="@drawable/close_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/tvProductName"
@@ -118,10 +115,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/productColor"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/productColor">
 
                 <ImageButton
                     android:id="@+id/btnDecreaseQuantity"
@@ -129,6 +126,7 @@
                     android:layout_height="36dp"
                     android:background="@drawable/white_background"
                     android:contentDescription="Decrease Quantity"
+                    android:backgroundTint="@color/navy_blue"
                     android:padding="8dp"
                     android:src="@drawable/minus_icon" />
 
@@ -147,6 +145,7 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:background="@drawable/white_background"
+                    android:backgroundTint="@color/navy_blue"
                     android:contentDescription="Increase Quantity"
                     android:padding="8dp"
                     android:src="@drawable/plus_icon" />
@@ -159,6 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add to cart"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/quantityControlsContainer" />
