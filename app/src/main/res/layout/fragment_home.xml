@@ -15,8 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabRippleColor="@color/white"
-            app:tabSelectedTextColor="@color/black"
-            app:tabIndicator="@null"
+            app:tabSelectedTextColor="@color/white"
+            app:tabSelectedTextAppearance="@color/white"
+            android:background="@color/navy_blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

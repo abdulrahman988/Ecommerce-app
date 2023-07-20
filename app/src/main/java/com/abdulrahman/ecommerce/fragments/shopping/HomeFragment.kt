@@ -26,18 +26,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.viewPager.adapter = HomeFragmentViewPagerAdapter(childFragmentManager,lifecycle)
-        TabLayoutMediator(binding.tabLayout,binding.viewPager){ tab, position ->
+        binding.viewPager.adapter = HomeFragmentViewPagerAdapter(childFragmentManager, lifecycle)
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
-                0-> tab.text = "Main"
-                1-> tab.text = "Laptop"
-                2-> tab.text = "Mobile"
-                3-> tab.text = "Tv"
-                4-> tab.text = "Head Phone"
+                0 -> tab.text = "Main"
+                1 -> tab.text = "Laptop"
+                2 -> tab.text = "Mobile"
+                3 -> tab.text = "Tv"
+                4 -> tab.text = "Head Phone"
             }
         }.attach()
 
-    binding.viewPager.isUserInputEnabled = false
+        binding.viewPager.isUserInputEnabled = false
 
     }
 
@@ -46,8 +46,9 @@ class HomeFragment : Fragment() {
         showBottomViewNavigationBar()
     }
 
-    private fun showBottomViewNavigationBar(){
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+    private fun showBottomViewNavigationBar() {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView?.visibility = View.VISIBLE
     }
 
