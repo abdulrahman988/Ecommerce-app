@@ -40,7 +40,7 @@
 
         <Button
             android:id="@+id/buttonRegisterAccountOptionsFragment"
-            style="@style/blueButtonStyle"
+            style="@style/tealButtonStyle"
             android:layout_width="@dimen/mediumButtonWidth"
             android:layout_height="@dimen/mediumButtonHeight"
             android:layout_marginTop="@dimen/_40sdp"

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardElevation="4dp">
+    style="@style/cardViewItem">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+<androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
@@ -77,7 +77,7 @@
             android:layout_marginTop="1dp"
             android:text="Offer Percentage"
             android:textAlignment="center"
-            android:textColor="@color/g_red"
+            android:textColor="@color/red"
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
 
         <Button
             android:id="@+id/btnAddToCartCategory"
-            style="@style/blueButtonStyle"
+            style="@style/tealButtonStyle"
             android:padding="@dimen/_4sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

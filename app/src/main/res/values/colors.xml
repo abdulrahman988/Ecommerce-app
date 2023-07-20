@@ -8,8 +8,30 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+
+
+
     <color name="grey">#5C8984</color>
     <color name="green">#E8F6EF</color>
+
+
+
+    <color name="mint">#DDFFE7</color>
+    <color name="spearmint">#98D7C2</color>
+    <color name="teal_green">#167D7F</color>
+    <color name="teal">#29A0B1</color>
+    <color name="navy_blue">#00264C</color>
+    <color name="charcoal1">#36454F</color>
+    <color name="gray">#A3ABB0</color>
+    <color name="salmon">#D58469</color>
+    <color name="red">#FF0000</color>
+
+
+
+
+
+
+
 
 
 
@@ -24,7 +46,6 @@
     <color name="g_search_and_icons">#FAFBFC</color>
     <color name="g_line">#E9EAEC</color>
     <color name="g_blue100">#B8D9FA</color>
-    <color name="g_red">#FF0000</color>
     <color name="g_gray500">#969899</color>
     <color name="g_orange_yellow">#F8BA00</color>
 
