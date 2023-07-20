@@ -11,11 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.CartRecyclerViewAdapter
 import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.CartViewModel
 import com.abdulrahman.ecommerce.viewmodel.MainCategoryViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -25,6 +27,7 @@ class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private lateinit var cartRecyclerview: CartRecyclerViewAdapter
     private val viewModel by viewModels<CartViewModel>()
+    private var total: Float = 0F
 
 
     override fun onCreateView(
@@ -45,6 +48,17 @@ class CartFragment : Fragment() {
                 when (it) {
                     is Resource.Success -> {
                         cartRecyclerview.submitList(it.data!!)
+                        for (item in it.data){
+                            total += if (item.product.offerPercentage?.equals(0) == true) {
+                                item.quantity * item.product.price
+                            }else{
+                                val discounted = (item.product.offerPercentage?.times(item.product.price))!! /100
+                                item.quantity *(item.product.price - discounted)
+                            }
+                        }
+                        binding.tvTotalprice.text ="$ ${String.format("%.2f", (total))}"
+
+
                     }
 
                     is Resource.Error -> {
@@ -73,4 +87,6 @@ class CartFragment : Fragment() {
             adapter = cartRecyclerview
         }
     }
+
+
 }

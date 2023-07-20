@@ -12,11 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.data.CartProduct
 import com.abdulrahman.ecommerce.databinding.FragmentProductBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.ProductDetailViewModel
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,6 +37,7 @@ class ProductDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideBottomViewNavigationBar()
 
         val product = args.product
 
@@ -81,6 +84,10 @@ class ProductDetailsFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun hideBottomViewNavigationBar(){
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.GONE
     }
 }
 
