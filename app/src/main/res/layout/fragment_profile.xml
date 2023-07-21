@@ -11,14 +11,7 @@
         android:orientation="vertical"
         android:padding="@dimen/_40sdp">
 
-        <ProgressBar
-            android:id="@id/progressBar"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"/>
 
-        <!-- Profile Picture -->
         <ImageView
             android:id="@+id/ivProfilePicture"
             android:layout_width="@dimen/_130sdp"
@@ -26,9 +19,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/placeholder_image" />
+            android:background="@drawable/profile_icon" />
 
-        <!-- First Name -->
         <TextView
             android:id="@+id/tvFirstName"
             android:layout_width="wrap_content"
@@ -40,7 +32,6 @@
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
 
-        <!-- Last Name -->
         <TextView
             android:id="@+id/tvLastName"
             android:layout_width="wrap_content"
@@ -52,25 +43,25 @@
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
 
-        <!-- Email -->
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold"
+            android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/_20ssp"
+            android:textSize="@dimen/_15ssp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="user@example.com" />
 
-        <!-- Logout Button -->
         <Button
             android:id="@+id/btnLogout"
             style="@style/tealButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_200sdp"
             android:text="Logout" />
 
     </LinearLayout>
