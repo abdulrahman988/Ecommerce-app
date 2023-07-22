@@ -82,7 +82,9 @@ class CartFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        cartRecyclerview = CartRecyclerViewAdapter()
+        cartRecyclerview = CartRecyclerViewAdapter(CartRecyclerViewAdapter.OnClickListener{
+            Toast.makeText(requireContext(), "you clicked this product  $it", Toast.LENGTH_SHORT).show()
+        })
         binding.rvCart.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

@@ -12,7 +12,7 @@ import com.abdulrahman.ecommerce.databinding.BestDealsRvItemBinding
 import com.abdulrahman.ecommerce.databinding.CartProductItemBinding
 import com.bumptech.glide.Glide
 
-class CartRecyclerViewAdapter : RecyclerView.Adapter<CartRecyclerViewAdapter.cartViewHolder>() {
+class CartRecyclerViewAdapter(private val onClickListener: OnClickListener) : RecyclerView.Adapter<CartRecyclerViewAdapter.cartViewHolder>() {
 
     private var items: List<CartProduct> = emptyList()
 
@@ -54,7 +54,11 @@ class CartRecyclerViewAdapter : RecyclerView.Adapter<CartRecyclerViewAdapter.car
                     tvProductPercentageCart.visibility = View.GONE
                     tvProductDiscountedPriceCart.visibility = View.GONE
                 }
+                    ivDelete.setOnClickListener {
+                        onClickListener.onClick(cartProduct)
+                    }
             }
+
         }
     }
 
@@ -88,5 +92,9 @@ class CartRecyclerViewAdapter : RecyclerView.Adapter<CartRecyclerViewAdapter.car
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             return oldProductList[oldItemPosition] == newProductList[newItemPosition]
         }
+    }
+
+    class OnClickListener(val clickListener: (cartProduct: CartProduct) -> Unit) {
+        fun onClick(cartProduct: CartProduct) = clickListener(cartProduct)
     }
 }
