@@ -37,8 +37,6 @@ class IntroductionFragment : Fragment() {
                 findNavController().navigate(R.id.action_introductionFragment_to_acountOptionsFragment)
 
             }
-//            findNavController().navigate(R.id.action_introductionFragment_to_acountOptionsFragment)
-
         }
 
     }

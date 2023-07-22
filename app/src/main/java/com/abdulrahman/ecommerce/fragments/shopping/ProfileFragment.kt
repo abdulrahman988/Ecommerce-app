@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.activities.LoginRegisterActivity
 import com.abdulrahman.ecommerce.databinding.FragmentProfileBinding
@@ -37,7 +38,11 @@ class ProfileFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
-            startActivity(Intent(requireContext(), LoginRegisterActivity::class.java))
+//            startActivity(Intent(requireContext(), LoginRegisterActivity::class.java))
+
+            val direction = ProfileFragmentDirections.actionProfileFragmentToIntroductionFragment2()
+            findNavController().navigate(direction)
+
         }
 
 
@@ -45,9 +50,7 @@ class ProfileFragment : Fragment() {
             viewModel.profileImg.collect {
                 when (it) {
                     is Resource.Success -> {
-                        if (it.data.toString() != null){
-                            Glide.with(this@ProfileFragment).load(it.data).into(binding.ivProfilePicture)
-                        }
+                        Glide.with(this@ProfileFragment).load(it.data).into(binding.ivProfilePicture)
                     }
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
