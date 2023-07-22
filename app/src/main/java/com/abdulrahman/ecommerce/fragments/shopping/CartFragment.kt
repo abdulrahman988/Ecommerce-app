@@ -110,9 +110,6 @@ class CartFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     companion object {
         const val TAG = "cart fragment"

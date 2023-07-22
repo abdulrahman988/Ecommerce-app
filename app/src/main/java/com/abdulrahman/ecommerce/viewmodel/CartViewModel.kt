@@ -45,16 +45,26 @@ class CartViewModel @Inject constructor(
     }
 
     fun deleteCartProduct(cartProduct: CartProduct) {
-        db.collection("user").document(auth.uid!!).collection("cart").document().delete()
-            .addOnSuccessListener {
-                viewModelScope.launch {
-                    _delete.emit(Resource.Success(null))
+        db.collection("user").document(auth.uid!!).collection("cart") .whereEqualTo("product.id", cartProduct.product.id).get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty){
+                        querySnapshot.documents[0].reference.delete()
+                            .addOnSuccessListener {
+                                viewModelScope.launch {
+                                    _delete.emit(Resource.Success(null))
+                                }
+                        }.addOnFailureListener {
+                                viewModelScope.launch {
+                                    _delete.emit(Resource.Error(it.message.toString()))
+                                }
+                        }
                 }
-            }.addOnFailureListener {
+        }.addOnFailureListener {
                 viewModelScope.launch {
                     _delete.emit(Resource.Error(it.message.toString()))
                 }
             }
+
     }
 
 
