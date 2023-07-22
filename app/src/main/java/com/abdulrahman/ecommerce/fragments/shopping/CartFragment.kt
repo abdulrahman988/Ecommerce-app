@@ -1,5 +1,6 @@
 package com.abdulrahman.ecommerce.fragments.shopping
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -68,8 +69,9 @@ class CartFragment : Fragment() {
             viewModel.price.collect {
                 when (it) {
                     is Resource.Success -> {
-                        binding.tvTotalprice.text = "$ ${String.format("%.2f",(it.data))}"
+                        binding.tvTotalprice.text = "$ ${String.format("%.2f", (it.data))}"
                     }
+
                     else -> Unit
                 }
             }
@@ -79,7 +81,11 @@ class CartFragment : Fragment() {
             viewModel.cartProduct.collect {
                 when (it) {
                     is Resource.Success -> {
-                        cartRecyclerViewAdapter.submitList(it.data!!)
+                        if (it.data?.isEmpty() == true) {
+                            cartRecyclerViewAdapter.submitList(it.data!!)
+                        } else {
+                            showEmptyCart()
+                        }
                     }
 
                     is Resource.Error -> {
@@ -98,15 +104,27 @@ class CartFragment : Fragment() {
 
     }
 
+    private fun showEmptyCart() {
+        binding.apply {
+            rvCart.visibility = View.INVISIBLE
+            textView.visibility = View.INVISIBLE
+            tvTotalprice.visibility = View.INVISIBLE
+            btnCheckout.visibility = View.INVISIBLE
+
+            emptyCart.visibility = View.VISIBLE
+            tvEmptyCart.visibility = View.VISIBLE
+
+        }
+    }
+
     private fun setupRecyclerView() {
-        cartRecyclerViewAdapter = CartRecyclerViewAdapter(CartRecyclerViewAdapter.OnClickListener{
+        cartRecyclerViewAdapter = CartRecyclerViewAdapter(CartRecyclerViewAdapter.OnClickListener {
             viewModel.deleteCartProduct(it)
         })
         binding.rvCart.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = cartRecyclerViewAdapter
-            hasFixedSize()
         }
     }
 
