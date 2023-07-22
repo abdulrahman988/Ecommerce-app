@@ -55,7 +55,6 @@ class CartFragment : Fragment() {
                             "item deleted successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-                        total = 0f
                     }
 
                     is Resource.Error -> {
