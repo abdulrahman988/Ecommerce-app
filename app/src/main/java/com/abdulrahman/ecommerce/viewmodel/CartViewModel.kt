@@ -55,7 +55,7 @@ class CartViewModel @Inject constructor(
 //                        }
                     }
                     viewModelScope.launch {
-                        _price.emit(Resource.Success(total))
+                        _price.emit(Resource.Success(555f))
                     }
                 }
             }
