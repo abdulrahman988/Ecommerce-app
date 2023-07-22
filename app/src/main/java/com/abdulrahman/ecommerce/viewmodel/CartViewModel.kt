@@ -19,7 +19,6 @@ class CartViewModel @Inject constructor(
     private val auth: FirebaseAuth
 ) : ViewModel() {
 
-    private var total: Float = 0F
 
     private val _cartProduct = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
     val cartProduct = _cartProduct.asStateFlow()
@@ -31,20 +30,33 @@ class CartViewModel @Inject constructor(
     val price = _price.asStateFlow()
 
 
+    fun getTotalPrice(cartProducts: List<CartProduct>) {
+        var total = 0F
+        for (item in cartProducts) {
+            total += item.quantity.toFloat() * item.product.price
+            if (item.product.offerPercentage!!.equals(0)) {
+                total += item.quantity * item.product.price
+            } else {
+                val discounted =
+                    (item.product.offerPercentage.times(item.product.price)) / 100
+                total += item.quantity * (item.product.price - discounted)
+            }
+        }
+//        db.collection("user").document(auth.uid!!).collection("cart")
+//            .addSnapshotListener { value, error ->
+//                if (error != null || value == null) {
+//                    viewModelScope.launch {
+//                        _cartProduct.emit(Resource.Error(error?.message.toString()))
+//                    }
+//                } else {
+//                    val cartProducts = value.toObjects(CartProduct::class.java)
+//                        cartProducts.forEach { cartProduct ->
+//                            total += (cartProduct.quantity) * (cartProduct.product.price)
+//                        }
 
-    fun getTotalPrice(){
-        db.collection("user").document(auth.uid!!).collection("cart")
-            .addSnapshotListener { value, error ->
-                if (error != null || value == null) {
-                    viewModelScope.launch {
-                        _cartProduct.emit(Resource.Error(error?.message.toString()))
-                    }
-                } else {
-                    val cartProducts = value.toObjects(CartProduct::class.java)
 
-                    for (item in cartProducts){
-                         total += item.quantity.toFloat() * item.product.price
-
+//                    for (item in cartProducts){
+//                         total += item.quantity.toFloat() * item.product.price
 //                         if (item.product.offerPercentage!!.equals(0)) {
 //                             total += item.quantity * item.product.price
 //                        }
@@ -53,13 +65,12 @@ class CartViewModel @Inject constructor(
 //                                (item.product.offerPercentage.times(item.product.price))/ 100
 //                             total += item.quantity * (item.product.price - discounted)
 //                        }
-                    }
-                    viewModelScope.launch {
-                        _price.emit(Resource.Success(555f))
-                    }
-                }
-            }
+//                    }
+        viewModelScope.launch {
+            _price.emit(Resource.Success(total))
+        }
     }
+
 
     fun getCartProduct() {
         db.collection("user").document(auth.uid!!).collection("cart")

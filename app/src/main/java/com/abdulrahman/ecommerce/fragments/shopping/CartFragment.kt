@@ -43,7 +43,6 @@ class CartFragment : Fragment() {
 
 
         viewModel.getCartProduct()
-        viewModel.getTotalPrice()
         setupRecyclerView()
 
         lifecycleScope.launch {
@@ -86,6 +85,7 @@ class CartFragment : Fragment() {
                             showEmptyCart()
                         } else {
                             cartRecyclerViewAdapter.submitList(it.data!!)
+                            viewModel.getTotalPrice(it.data)
 
                         }
                     }
