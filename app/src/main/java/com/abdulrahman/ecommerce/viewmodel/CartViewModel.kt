@@ -32,7 +32,34 @@ class CartViewModel @Inject constructor(
 
 
 
+    fun getTotalPrice(){
+        db.collection("user").document(auth.uid!!).collection("cart")
+            .addSnapshotListener { value, error ->
+                if (error != null || value == null) {
+                    viewModelScope.launch {
+                        _cartProduct.emit(Resource.Error(error?.message.toString()))
+                    }
+                } else {
+                    val cartProducts = value.toObjects(CartProduct::class.java)
 
+                    for (item in cartProducts){
+                         total += item.quantity.toFloat() * item.product.price
+
+//                         if (item.product.offerPercentage!!.equals(0)) {
+//                             total += item.quantity * item.product.price
+//                        }
+//                         else {
+//                            val discounted =
+//                                (item.product.offerPercentage.times(item.product.price))/ 100
+//                             total += item.quantity * (item.product.price - discounted)
+//                        }
+                    }
+                    viewModelScope.launch {
+                        _price.emit(Resource.Success(total))
+                    }
+                }
+            }
+    }
 
     fun getCartProduct() {
         db.collection("user").document(auth.uid!!).collection("cart")
@@ -43,17 +70,7 @@ class CartViewModel @Inject constructor(
                     }
                 } else {
                     val cartProducts = value.toObjects(CartProduct::class.java)
-                    for (item in cartProducts){
-                        total = if (item.product?.offerPercentage?.equals(0) == true) {
-                            item.quantity * item.product.price
-                        } else {
-                            val discounted =
-                                (item.product.offerPercentage?.times(item.product.price))!! / 100
-                            item.quantity * (item.product.price - discounted)
-                        }
-                    }
                     viewModelScope.launch {
-                        _price.emit(Resource.Success(total))
                         _cartProduct.emit(Resource.Success(cartProducts))
                     }
                 }

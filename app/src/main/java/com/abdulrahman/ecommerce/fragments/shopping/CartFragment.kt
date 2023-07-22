@@ -43,6 +43,7 @@ class CartFragment : Fragment() {
 
 
         viewModel.getCartProduct()
+        viewModel.getTotalPrice()
         setupRecyclerView()
 
         lifecycleScope.launch {
