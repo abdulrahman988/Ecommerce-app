@@ -82,9 +82,10 @@ class CartFragment : Fragment() {
                 when (it) {
                     is Resource.Success -> {
                         if (it.data?.isEmpty() == true) {
-                            cartRecyclerViewAdapter.submitList(it.data!!)
-                        } else {
                             showEmptyCart()
+                        } else {
+                            cartRecyclerViewAdapter.submitList(it.data!!)
+
                         }
                     }
 
