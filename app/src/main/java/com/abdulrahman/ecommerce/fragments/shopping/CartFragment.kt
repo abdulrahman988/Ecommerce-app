@@ -28,8 +28,6 @@ class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private lateinit var cartRecyclerViewAdapter: CartRecyclerViewAdapter
     private val viewModel by viewModels<CartViewModel>()
-    private var total: Float = 0F
-    private var _cartProduct = CartProduct()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -67,20 +65,21 @@ class CartFragment : Fragment() {
         }
 
         lifecycleScope.launch {
+            viewModel.price.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        binding.tvTotalprice.text = "$ ${String.format("%.2f",(it.data))}"
+                    }
+                    else -> Unit
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             viewModel.cartProduct.collect {
                 when (it) {
                     is Resource.Success -> {
                         cartRecyclerViewAdapter.submitList(it.data!!)
-                        for (item in it.data) {
-                            total += if (item.product?.offerPercentage?.equals(0) == true) {
-                                item.quantity * item.product.price
-                            } else {
-                                val discounted =
-                                    (item.product.offerPercentage?.times(item.product.price))!! / 100
-                                item.quantity * (item.product.price - discounted)
-                            }
-                        }
-                        binding.tvTotalprice.text = "$ ${String.format("%.2f", (total))}"
                     }
 
                     is Resource.Error -> {

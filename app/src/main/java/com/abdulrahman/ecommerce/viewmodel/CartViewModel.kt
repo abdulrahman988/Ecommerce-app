@@ -19,11 +19,20 @@ class CartViewModel @Inject constructor(
     private val auth: FirebaseAuth
 ) : ViewModel() {
 
+    private var total: Float = 0F
+
     private val _cartProduct = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
     val cartProduct = _cartProduct.asStateFlow()
 
     private val _delete = MutableStateFlow<Resource<Void>>(Resource.Unspecified())
     val delete = _delete.asStateFlow()
+
+    private val _price = MutableStateFlow<Resource<Float>>(Resource.Unspecified())
+    val price = _price.asStateFlow()
+
+
+
+
 
     fun getCartProduct() {
         db.collection("user").document(auth.uid!!).collection("cart")
@@ -34,7 +43,17 @@ class CartViewModel @Inject constructor(
                     }
                 } else {
                     val cartProducts = value.toObjects(CartProduct::class.java)
+                    for (item in cartProducts){
+                        total = if (item.product?.offerPercentage?.equals(0) == true) {
+                            item.quantity * item.product.price
+                        } else {
+                            val discounted =
+                                (item.product.offerPercentage?.times(item.product.price))!! / 100
+                            item.quantity * (item.product.price - discounted)
+                        }
+                    }
                     viewModelScope.launch {
+                        _price.emit(Resource.Success(total))
                         _cartProduct.emit(Resource.Success(cartProducts))
                     }
                 }
@@ -42,22 +61,18 @@ class CartViewModel @Inject constructor(
     }
 
     fun deleteCartProduct(cartProduct: CartProduct) {
-        db.collection("user").document(auth.uid!!).collection("cart") .whereEqualTo("product.id", cartProduct.product.id).get()
+        db.collection("user").document(auth.uid!!).collection("cart")
+            .whereEqualTo("product.id", cartProduct.product.id).get()
             .addOnSuccessListener { querySnapshot ->
-                if (!querySnapshot.isEmpty){
-                        querySnapshot.documents[0].reference.delete()
-                            .addOnSuccessListener {
-//                                getCartProduct()
-                                viewModelScope.launch {
-                                    _delete.emit(Resource.Success(null))
-                                }
-                        }.addOnFailureListener {
-                                viewModelScope.launch {
-                                    _delete.emit(Resource.Error(it.message.toString()))
-                                }
+                if (!querySnapshot.isEmpty) {
+                    querySnapshot.documents[0].reference.delete()
+                        .addOnFailureListener {
+                            viewModelScope.launch {
+                                _delete.emit(Resource.Error(it.message.toString()))
+                            }
                         }
                 }
-        }.addOnFailureListener {
+            }.addOnFailureListener {
                 viewModelScope.launch {
                     _delete.emit(Resource.Error(it.message.toString()))
                 }
