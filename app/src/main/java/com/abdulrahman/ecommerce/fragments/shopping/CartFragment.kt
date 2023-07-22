@@ -1,6 +1,7 @@
 package com.abdulrahman.ecommerce.fragments.shopping
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.CartViewModel
 import com.abdulrahman.ecommerce.viewmodel.MainCategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -50,40 +52,50 @@ class CartFragment : Fragment() {
                 when (it) {
                     is Resource.Success -> {
                         cartRecyclerview.submitList(it.data!!)
-                        for (item in it.data){
+                        for (item in it.data) {
                             total += if (item.product.offerPercentage?.equals(0) == true) {
                                 item.quantity * item.product.price
-                            }else{
-                                val discounted = (item.product.offerPercentage?.times(item.product.price))!! /100
-                                item.quantity *(item.product.price - discounted)
+                            } else {
+                                val discounted =
+                                    (item.product.offerPercentage?.times(item.product.price))!! / 100
+                                item.quantity * (item.product.price - discounted)
                             }
                         }
-                        binding.tvTotalprice.text ="$ ${String.format("%.2f", (total))}"
-
-
+                        binding.tvTotalprice.text = "$ ${String.format("%.2f", (total))}"
                     }
 
                     is Resource.Error -> {
-                        Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
+                        Log.e(TAG, it.message.toString())
                     }
-
                     else -> Unit
                 }
             }
         }
 
-        binding.ivCloseCart.setOnClickListener{
-                findNavController().navigateUp()
+        lifecycleScope.launch {
+            viewModel.delete.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        Toast.makeText(requireContext(),"item deleted successfully",Toast.LENGTH_SHORT).show()
+                    }
+                    is Resource.Error -> {
+                        Log.e(TAG, it.message.toString())
+                    }
+                    else -> Unit
+                }
             }
+        }
 
-
+        binding.ivCloseCart.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
 
     }
 
     private fun setupRecyclerView() {
-        cartRecyclerview = CartRecyclerViewAdapter(CartRecyclerViewAdapter.OnClickListener{
-            Toast.makeText(requireContext(), "you clicked this product  $it", Toast.LENGTH_SHORT).show()
+        cartRecyclerview = CartRecyclerViewAdapter(CartRecyclerViewAdapter.OnClickListener {
+            viewModel.deleteCartProduct(cartProduct = it)
         })
         binding.rvCart.apply {
             layoutManager =
@@ -92,5 +104,7 @@ class CartFragment : Fragment() {
         }
     }
 
-
+companion object{
+    const val TAG = "cart fragment"
+}
 }

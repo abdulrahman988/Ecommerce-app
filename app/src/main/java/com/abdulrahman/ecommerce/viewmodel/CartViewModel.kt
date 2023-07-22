@@ -22,8 +22,10 @@ class CartViewModel @Inject constructor(
     private val _cartProduct = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
     val cartProduct = _cartProduct.asStateFlow()
 
+    private val _delete = MutableStateFlow<Resource<Void>>(Resource.Unspecified())
+    val delete = _delete.asStateFlow()
 
-     fun getCartProduct() {
+    fun getCartProduct() {
         viewModelScope.launch {
             _cartProduct.emit(Resource.Loading())
         }
@@ -42,24 +44,18 @@ class CartViewModel @Inject constructor(
             }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    fun deleteCartProduct(cartProduct: CartProduct) {
+        db.collection("user").document(auth.uid!!).collection("cart").document(cartProduct.product.id).delete()
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    _delete.emit(Resource.Success(null))
+                }
+            }.addOnFailureListener {
+                viewModelScope.launch {
+                    _delete.emit(Resource.Error(it.message.toString()))
+                }
+            }
+    }
 
 
 }
