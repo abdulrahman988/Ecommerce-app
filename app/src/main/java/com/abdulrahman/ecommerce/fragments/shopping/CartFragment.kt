@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.CartRecyclerViewAdapter
+import com.abdulrahman.ecommerce.data.CartProduct
 import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.CartViewModel
@@ -30,7 +31,7 @@ class CartFragment : Fragment() {
     private lateinit var cartRecyclerview: CartRecyclerViewAdapter
     private val viewModel by viewModels<CartViewModel>()
     private var total: Float = 0F
-
+    private var _cartProduct = CartProduct()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -53,12 +54,12 @@ class CartFragment : Fragment() {
                     is Resource.Success -> {
                         cartRecyclerview.submitList(it.data!!)
                         for (item in it.data) {
-                            total += if (item.product.offerPercentage?.equals(0) == true) {
-                                item.quantity * item.product.price
+                            total += if (item.product?.offerPercentage?.equals(0) == true) {
+                                item.quantity!! * item.product.price
                             } else {
                                 val discounted =
-                                    (item.product.offerPercentage?.times(item.product.price))!! / 100
-                                item.quantity * (item.product.price - discounted)
+                                    (item.product?.offerPercentage?.times(item.product.price))!! / 100
+                                item.quantity!! * (item.product.price - discounted)
                             }
                         }
                         binding.tvTotalprice.text = "$ ${String.format("%.2f", (total))}"
@@ -67,6 +68,7 @@ class CartFragment : Fragment() {
                     is Resource.Error -> {
                         Log.e(TAG, it.message.toString())
                     }
+
                     else -> Unit
                 }
             }
@@ -76,11 +78,17 @@ class CartFragment : Fragment() {
             viewModel.delete.collect {
                 when (it) {
                     is Resource.Success -> {
-                        Toast.makeText(requireContext(),"item deleted successfully",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "item deleted successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+
                     is Resource.Error -> {
                         Log.e(TAG, it.message.toString())
                     }
+
                     else -> Unit
                 }
             }
@@ -94,9 +102,7 @@ class CartFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        cartRecyclerview = CartRecyclerViewAdapter(CartRecyclerViewAdapter.OnClickListener {
-            viewModel.deleteCartProduct(cartProduct = it)
-        })
+        cartRecyclerview = CartRecyclerViewAdapter(viewModel)
         binding.rvCart.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -104,7 +110,11 @@ class CartFragment : Fragment() {
         }
     }
 
-companion object{
-    const val TAG = "cart fragment"
-}
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    companion object {
+        const val TAG = "cart fragment"
+    }
 }

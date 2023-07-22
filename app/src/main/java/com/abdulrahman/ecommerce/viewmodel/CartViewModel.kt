@@ -45,7 +45,7 @@ class CartViewModel @Inject constructor(
     }
 
     fun deleteCartProduct(cartProduct: CartProduct) {
-        db.collection("user").document(auth.uid!!).collection("cart").document(cartProduct.product.id).delete()
+        db.collection("user").document(auth.uid!!).collection("cart").document().delete()
             .addOnSuccessListener {
                 viewModelScope.launch {
                     _delete.emit(Resource.Success(null))
