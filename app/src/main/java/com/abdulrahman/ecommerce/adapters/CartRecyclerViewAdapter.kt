@@ -13,7 +13,7 @@ import com.abdulrahman.ecommerce.databinding.CartProductItemBinding
 import com.abdulrahman.ecommerce.viewmodel.CartViewModel
 import com.bumptech.glide.Glide
 
-class CartRecyclerViewAdapter(private val viewModel: CartViewModel) : RecyclerView.Adapter<CartRecyclerViewAdapter.cartViewHolder>() {
+class CartRecyclerViewAdapter(private val onClickListener: OnClickListener) : RecyclerView.Adapter<CartRecyclerViewAdapter.cartViewHolder>() {
 
     private var items: List<CartProduct> = emptyList()
 
@@ -56,7 +56,8 @@ class CartRecyclerViewAdapter(private val viewModel: CartViewModel) : RecyclerVi
                     tvProductDiscountedPriceCart.visibility = View.GONE
                 }
                 ivDelete.setOnClickListener {
-                    viewModel.deleteCartProduct(cartProduct)
+                    onClickListener.onClick(cartProduct)
+
                 }
             }
         }

@@ -2,33 +2,31 @@ package com.abdulrahman.ecommerce.fragments.shopping
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.CartRecyclerViewAdapter
 import com.abdulrahman.ecommerce.data.CartProduct
 import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.CartViewModel
-import com.abdulrahman.ecommerce.viewmodel.MainCategoryViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 @AndroidEntryPoint
 
 class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
-    private lateinit var cartRecyclerview: CartRecyclerViewAdapter
+    private lateinit var cartRecyclerViewAdapter: CartRecyclerViewAdapter
     private val viewModel by viewModels<CartViewModel>()
     private var total: Float = 0F
     private var _cartProduct = CartProduct()
@@ -49,20 +47,15 @@ class CartFragment : Fragment() {
         setupRecyclerView()
 
         lifecycleScope.launch {
-            viewModel.cartProduct.collect {
+            viewModel.delete.collect {
                 when (it) {
                     is Resource.Success -> {
-                        cartRecyclerview.submitList(it.data!!)
-                        for (item in it.data) {
-                            total += if (item.product?.offerPercentage?.equals(0) == true) {
-                                item.quantity!! * item.product.price
-                            } else {
-                                val discounted =
-                                    (item.product?.offerPercentage?.times(item.product.price))!! / 100
-                                item.quantity!! * (item.product.price - discounted)
-                            }
-                        }
-                        binding.tvTotalprice.text = "$ ${String.format("%.2f", (total))}"
+                        Toast.makeText(
+                            requireContext(),
+                            "item deleted successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        total = 0f
                     }
 
                     is Resource.Error -> {
@@ -75,14 +68,20 @@ class CartFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.delete.collect {
+            viewModel.cartProduct.collect {
                 when (it) {
                     is Resource.Success -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "item deleted successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        cartRecyclerViewAdapter.submitList(it.data!!)
+                        for (item in it.data) {
+                            total += if (item.product?.offerPercentage?.equals(0) == true) {
+                                item.quantity * item.product.price
+                            } else {
+                                val discounted =
+                                    (item.product.offerPercentage?.times(item.product.price))!! / 100
+                                item.quantity * (item.product.price - discounted)
+                            }
+                        }
+                        binding.tvTotalprice.text = "$ ${String.format("%.2f", (total))}"
                     }
 
                     is Resource.Error -> {
@@ -102,11 +101,14 @@ class CartFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        cartRecyclerview = CartRecyclerViewAdapter(viewModel)
+        cartRecyclerViewAdapter = CartRecyclerViewAdapter(CartRecyclerViewAdapter.OnClickListener{
+            viewModel.deleteCartProduct(it)
+        })
         binding.rvCart.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = cartRecyclerview
+            adapter = cartRecyclerViewAdapter
+            hasFixedSize()
         }
     }
 

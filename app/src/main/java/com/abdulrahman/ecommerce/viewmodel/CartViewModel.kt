@@ -26,9 +26,6 @@ class CartViewModel @Inject constructor(
     val delete = _delete.asStateFlow()
 
     fun getCartProduct() {
-        viewModelScope.launch {
-            _cartProduct.emit(Resource.Loading())
-        }
         db.collection("user").document(auth.uid!!).collection("cart")
             .addSnapshotListener { value, error ->
                 if (error != null || value == null) {
@@ -50,6 +47,7 @@ class CartViewModel @Inject constructor(
                 if (!querySnapshot.isEmpty){
                         querySnapshot.documents[0].reference.delete()
                             .addOnSuccessListener {
+//                                getCartProduct()
                                 viewModelScope.launch {
                                     _delete.emit(Resource.Success(null))
                                 }
