@@ -19,6 +19,7 @@ import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -66,14 +67,8 @@ class CartFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.price.collect {
-                when (it) {
-                    is Resource.Success -> {
-                        binding.tvTotalprice.text = "$ ${String.format("%.2f", (it.data))}"
-                    }
-
-                    else -> Unit
-                }
+            viewModel.productPrice.collect {
+                binding.tvTotalprice.text = "$ ${String.format("%.2f", (it))}"
             }
         }
 
@@ -85,8 +80,6 @@ class CartFragment : Fragment() {
                             showEmptyCart()
                         } else {
                             cartRecyclerViewAdapter.submitList(it.data!!)
-                            viewModel.getTotalPrice(it.data)
-
                         }
                     }
 

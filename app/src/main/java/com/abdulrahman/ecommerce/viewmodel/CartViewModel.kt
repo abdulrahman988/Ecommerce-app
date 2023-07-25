@@ -10,6 +10,7 @@ import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,52 +24,38 @@ class CartViewModel @Inject constructor(
     private val _cartProduct = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
     val cartProduct = _cartProduct.asStateFlow()
 
+    private var price = 0f
+    private var discounted = 0f
+
+
     private val _delete = MutableStateFlow<Resource<Void>>(Resource.Unspecified())
     val delete = _delete.asStateFlow()
 
-    private val _price = MutableStateFlow<Resource<Float>>(Resource.Unspecified())
-    val price = _price.asStateFlow()
-
-
-    fun getTotalPrice(cartProducts: List<CartProduct>) {
-        var total = 0F
-        for (item in cartProducts) {
-            total += item.quantity.toFloat() * item.product.price
-            if (item.product.offerPercentage!!.equals(0)) {
-                total += item.quantity * item.product.price
-            } else {
-                val discounted =
-                    (item.product.offerPercentage.times(item.product.price)) / 100
-                total += item.quantity * (item.product.price - discounted)
+     val productPrice = cartProduct.map {
+        when (it){
+            is Resource.Success -> {
+                calculatePrice(it.data!!)
             }
+            else -> null
         }
-//        db.collection("user").document(auth.uid!!).collection("cart")
-//            .addSnapshotListener { value, error ->
-//                if (error != null || value == null) {
-//                    viewModelScope.launch {
-//                        _cartProduct.emit(Resource.Error(error?.message.toString()))
-//                    }
-//                } else {
-//                    val cartProducts = value.toObjects(CartProduct::class.java)
-//                        cartProducts.forEach { cartProduct ->
-//                            total += (cartProduct.quantity) * (cartProduct.product.price)
-//                        }
+    }
 
 
-//                    for (item in cartProducts){
-//                         total += item.quantity.toFloat() * item.product.price
-//                         if (item.product.offerPercentage!!.equals(0)) {
-//                             total += item.quantity * item.product.price
-//                        }
-//                         else {
-//                            val discounted =
-//                                (item.product.offerPercentage.times(item.product.price))/ 100
-//                             total += item.quantity * (item.product.price - discounted)
-//                        }
-//                    }
-        viewModelScope.launch {
-            _price.emit(Resource.Success(total))
+    private fun getProductPrice(cartProduct: CartProduct): Float {
+         if (cartProduct.product.offerPercentage?.equals(0) == true){
+            price = cartProduct.quantity.toFloat() * cartProduct.product.price
+        }else{
+            discounted = (cartProduct.product.offerPercentage?.times(cartProduct.product.price))!! / 100
+            price = cartProduct.quantity * (cartProduct.product.price - discounted)
         }
+        return price
+    }
+
+    private fun calculatePrice(cartProducts: List<CartProduct>): Float{
+
+         return cartProducts.sumByDouble { cartProduct ->
+             getProductPrice(cartProduct).toDouble()
+         }.toFloat()
     }
 
 
@@ -105,7 +92,6 @@ class CartViewModel @Inject constructor(
                     _delete.emit(Resource.Error(it.message.toString()))
                 }
             }
-
     }
 
 
