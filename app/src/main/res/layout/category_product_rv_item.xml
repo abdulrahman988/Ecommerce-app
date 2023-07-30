@@ -86,7 +86,7 @@
 
         <Button
             android:id="@+id/btnAddToCartCategory"
-            style="@style/tealButtonStyle"
+            style="@style/firstButtonStyle"
             android:padding="@dimen/_4sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

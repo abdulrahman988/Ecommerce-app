@@ -54,7 +54,7 @@
             android:id="@+id/btnAddToCartButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/tealButtonStyle"
+            style="@style/firstButtonStyle"
             android:padding="@dimen/_5sdp"
             android:text="Add to Cart"
             app:layout_constraintEnd_toEndOf="parent"

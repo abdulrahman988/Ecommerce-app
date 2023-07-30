@@ -30,7 +30,7 @@
 
     </style>
 
-    <style name="tealButtonStyle">
+    <style name="firstButtonStyle">
         <item name="android:background">@drawable/blue_background</item>
         <item name="android:fontFamily">@font/poppins_thin</item>
         <item name="android:textColor">@color/white</item>
@@ -38,11 +38,11 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="whiteButtonStyle">
+    <style name="secondButtonStyle">
         <item name="android:background">@drawable/white_background</item>
         <item name="android:fontFamily">@font/poppins_thin</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/_9ssp</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 

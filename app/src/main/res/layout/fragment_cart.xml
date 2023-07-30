@@ -115,7 +115,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_checkout"
-            style="@style/tealButtonStyle"
+            style="@style/firstButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginBottom="20dp"

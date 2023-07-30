@@ -34,7 +34,7 @@
         <Button
 
             android:id="@+id/buttonIntroduction"
-            style="@style/whiteButtonStyle"
+            style="@style/secondButtonStyle"
             android:layout_width="@dimen/smallButtonWidth"
             android:layout_height="@dimen/smallButtonHeight"
             android:layout_marginTop="296dp"

@@ -74,7 +74,7 @@
 
         <Button
             android:id="@+id/buttonLoginLoginFragment"
-            style="@style/tealButtonStyle"
+            style="@style/firstButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
             android:text="Login"

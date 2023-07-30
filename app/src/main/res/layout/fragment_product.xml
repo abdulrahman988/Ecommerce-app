@@ -154,7 +154,7 @@
 
             <Button
                 android:id="@+id/btnAddToCart"
-                style="@style/tealButtonStyle"
+                style="@style/firstButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add to cart"

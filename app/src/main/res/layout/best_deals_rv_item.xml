@@ -63,7 +63,7 @@
 
         <Button
             android:id="@+id/btnSeeProduct"
-            style="@style/tealButtonStyle"
+            style="@style/firstButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"

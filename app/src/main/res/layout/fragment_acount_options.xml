@@ -40,7 +40,7 @@
 
         <Button
             android:id="@+id/buttonRegisterAccountOptionsFragment"
-            style="@style/tealButtonStyle"
+            style="@style/firstButtonStyle"
             android:layout_width="@dimen/mediumButtonWidth"
             android:layout_height="@dimen/mediumButtonHeight"
             android:layout_marginTop="@dimen/_40sdp"
@@ -52,7 +52,7 @@
 
         <Button
             android:id="@+id/buttonLoginAccountOptionsFragment"
-            style="@style/whiteButtonStyle"
+            style="@style/secondButtonStyle"
             android:layout_width="@dimen/mediumButtonWidth"
             android:layout_height="@dimen/mediumButtonHeight"
             android:layout_marginTop="12dp"
