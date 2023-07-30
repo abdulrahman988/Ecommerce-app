@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shopping_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/addressFragment">
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.abdulrahman.ecommerce.fragments.shopping.CartFragment"
@@ -28,6 +28,9 @@
             app:destination="@id/introductionFragment2"
             app:popUpTo="@id/introductionFragment2"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -43,4 +46,9 @@
         android:name="com.abdulrahman.ecommerce.fragments.launchApp.IntroductionFragment"
         android:label="fragment_introduction"
         tools:layout="@layout/fragment_introduction" />
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" />
 </navigation>
