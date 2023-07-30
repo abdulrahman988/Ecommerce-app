@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.databinding.FragmentAddressBinding
 import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddressFragment : Fragment() {
 
     private lateinit var binding: FragmentAddressBinding
@@ -23,6 +25,8 @@ class AddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
     }
 }
