@@ -52,7 +52,7 @@ class AddressFragment : Fragment() {
                     }
                     
                     is Resource.Error -> {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT).show()
                     }
 
                     else -> Unit
@@ -62,7 +62,7 @@ class AddressFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.error.collect {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
