@@ -80,6 +80,7 @@ class AddressFragment : Fragment() {
                 viewModel.addAddress(address)
             }
         }
+        //this is a test to make
 
     }
 }
