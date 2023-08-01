@@ -36,7 +36,7 @@
 
 
             <TextView
-                android:id="@+id/tv_payment_methods"
+                android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
