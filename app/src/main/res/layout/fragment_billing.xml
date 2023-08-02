@@ -49,6 +49,183 @@
                 app:layout_constraintTop_toTopOf="@+id/img_address_close" />
         </androidx.appcompat.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/tv_payment_methods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxx"
+            android:fontFamily="@font/poppins_thin"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_billing"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_payment_explanation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="xxxx"
+            android:fontFamily="@font/sf_pro_display"
+            app:layout_constraintTop_toBottomOf="@id/tv_payment_methods"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_payment_explanation"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2" />
+
+        <TextView
+            android:id="@+id/tv_shopping_addresses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shipping"
+            android:fontFamily="@font/poppins_thin"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:drawableTint="@color/black"
+            app:drawableLeftCompat="@drawable/plus_icon" />
+
+        <ImageView
+            android:id="@+id/img_add_address"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/tv_shopping_addresses"
+            app:layout_constraintBottom_toBottomOf="@id/tv_shopping_addresses"
+            android:src="@drawable/plus_icon"
+            app:tint="@color/black"
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_adresses"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_shopping_addresses"
+            android:layout_marginTop="10dp" />
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/progressbar_addresses"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="@id/guideline1"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/guideline2"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_shopping_addresses"-->
+<!--            android:indeterminateTint="@color/g_hint"-->
+<!--            android:visibility="gone"/>-->
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/rv_adresses"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_products"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line2"
+            android:layout_marginTop="20dp" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/rv_products"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/line3"
+            android:visibility="invisible"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sf_pro_display"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_gravity="start|center_vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_totalprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sf_pro_display"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_gravity="end|center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_place_older"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="20dp"
+            style="@style/firstButtonStyle"
+            android:text="Place Order"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/guideline1" />
+
+
+
+        <TextView
+            android:id="@+id/tv_select_address_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toEndOf="@id/tv_shopping_addresses"
+            app:layout_constraintTop_toTopOf="@id/tv_shopping_addresses"
+            app:layout_constraintBottom_toBottomOf="@id/tv_shopping_addresses"
+            android:layout_marginStart="10dp"
+            android:visibility="gone"/>
+
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"
             android:layout_width="wrap_content"
@@ -62,6 +239,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.95" />
+
 
 
 
