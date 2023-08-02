@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shopping_graph"
-    app:startDestination="@id/addressFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.abdulrahman.ecommerce.fragments.shopping.CartFragment"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cartFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.abdulrahman.ecommerce.fragments.shopping.HomeFragment"
@@ -51,4 +55,9 @@
         android:name="com.abdulrahman.ecommerce.fragments.AddressFragment"
         android:label="fragment_address"
         tools:layout="@layout/fragment_address" />
+    <fragment
+        android:id="@+id/billingFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.BillingFragment"
+        android:label="fragment_billing"
+        tools:layout="@layout/fragment_billing" />
 </navigation>
