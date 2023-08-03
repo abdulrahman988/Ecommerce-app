@@ -16,8 +16,10 @@ import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
 import com.abdulrahman.ecommerce.paging.PagingAdapter
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 
 class BillingFragment : Fragment() {
     private lateinit var binding: FragmentBillingBinding
