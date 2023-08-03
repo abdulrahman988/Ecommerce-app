@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.CartRecyclerViewAdapter
 import com.abdulrahman.ecommerce.data.CartProduct
 import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
@@ -45,6 +46,10 @@ class CartFragment : Fragment() {
 
         viewModel.getCartProduct()
         setupRecyclerView()
+
+        binding.btnCheckout.setOnClickListener {
+            findNavController().navigate(R.id.action_cartFragment_to_billingFragment)
+        }
 
         lifecycleScope.launch {
             viewModel.delete.collect {
