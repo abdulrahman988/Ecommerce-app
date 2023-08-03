@@ -216,19 +216,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/rv_products">
+            app:layout_constraintTop_toBottomOf="@id/linear">
 
             <RadioButton
                 android:id="@+id/radioButtonOption1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Option 1" />
+                android:text="Cash on Deliivery" />
 
             <RadioButton
                 android:id="@+id/radioButtonOption2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Option 2" />
+                android:text="Visa " />
         </RadioGroup>
 
 
