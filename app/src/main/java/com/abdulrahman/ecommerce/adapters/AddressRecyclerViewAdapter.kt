@@ -1,15 +1,11 @@
 package com.abdulrahman.ecommerce.adapters
 
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.abdulrahman.ecommerce.data.Address
-import com.abdulrahman.ecommerce.data.Product
 import com.abdulrahman.ecommerce.databinding.AddressRvItemBinding
-import com.abdulrahman.ecommerce.databinding.BestDealsRvItemBinding
-import com.bumptech.glide.Glide
 
 class AddressRecyclerViewAdapter :
     RecyclerView.Adapter<AddressRecyclerViewAdapter.AddressViewHolder>() {
@@ -44,7 +40,7 @@ class AddressRecyclerViewAdapter :
     fun submitList(list: List<Address>) {
         val oldList = items
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(
-            ArticleItemDiffCallback(
+            AddressItemDiffCallback(
                 oldList, list
             )
         )
@@ -52,7 +48,7 @@ class AddressRecyclerViewAdapter :
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class ArticleItemDiffCallback(
+    class AddressItemDiffCallback(
         private var oldProductList: List<Address>,
         private var newProductList: List<Address>
     ) : DiffUtil.Callback() {

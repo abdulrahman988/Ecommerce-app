@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
+import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
 import com.abdulrahman.ecommerce.paging.PagingAdapter
 import com.abdulrahman.ecommerce.util.Resource
@@ -25,6 +26,7 @@ class BillingFragment : Fragment() {
     private lateinit var binding: FragmentBillingBinding
     private val viewModel by viewModels<BillingViewModel>()
     private lateinit var addressAdapter: AddressRecyclerViewAdapter
+    private lateinit var checkoutProductsAdapter: CheckoutProductRecyclerViewAdapter
 
 
     override fun onCreateView(
@@ -40,6 +42,7 @@ class BillingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupAddressRecyclerView()
+        setupCheckoutProductsRecyclerView()
 
         lifecycleScope.launch {
             viewModel.address.collect {
@@ -58,6 +61,24 @@ class BillingFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.product.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        it.data?.let { it1 -> checkoutProductsAdapter.submitList(it1) }
+                    }
+
+                    is Resource.Error -> {
+                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    else -> {}
+                }
+            }
+        }
+
+
     }
 
     private fun setupAddressRecyclerView() {
@@ -66,6 +87,15 @@ class BillingFragment : Fragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = addressAdapter
+        }
+    }
+
+    private fun setupCheckoutProductsRecyclerView() {
+        checkoutProductsAdapter = CheckoutProductRecyclerViewAdapter()
+        binding.rvProducts.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = checkoutProductsAdapter
         }
     }
 }
