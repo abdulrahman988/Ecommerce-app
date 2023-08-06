@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,22 +30,38 @@ class BillingViewModel @Inject constructor(
     private val _product = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
     val product = _product.asStateFlow()
 
-    private fun getAddresses() {
-        db.collection("user").document(auth.uid!!).collection("address")
-            .addSnapshotListener { value, error ->
-                if (error != null || value == null) {
-                    viewModelScope.launch {
-                        _address.emit(Resource.Error(error?.message.toString()))
-                    }
-                } else {
-                    val addresses = value.toObjects(Address::class.java)
-                    viewModelScope.launch {
-                        _address.emit(Resource.Success(addresses))
-                    }
-                }
 
+    private var price = 0f
+    private var discounted = 0f
+
+
+    val productPrice = product.map {
+        when (it) {
+            is Resource.Success -> {
+                calculatePrice(it.data!!)
             }
 
+            else -> null
+        }
+    }
+
+    private fun calculatePrice(cartProducts: List<CartProduct>): Float {
+
+        return cartProducts.sumByDouble { cartProduct ->
+            getProductPrice(cartProduct).toDouble()
+        }.toFloat()
+    }
+
+
+    private fun getProductPrice(cartProduct: CartProduct): Float {
+        if (cartProduct.product.offerPercentage?.equals(0) == true) {
+            price = cartProduct.quantity.toFloat() * cartProduct.product.price
+        } else {
+            discounted =
+                (cartProduct.product.offerPercentage?.times(cartProduct.product.price))!! / 100
+            price = cartProduct.quantity * (cartProduct.product.price - discounted)
+        }
+        return price
     }
 
     private fun getProducts() {
@@ -58,6 +75,24 @@ class BillingViewModel @Inject constructor(
                     val products = value.toObjects(CartProduct::class.java)
                     viewModelScope.launch {
                         _product.emit(Resource.Success(products))
+                    }
+                }
+
+            }
+
+    }
+
+    private fun getAddresses() {
+        db.collection("user").document(auth.uid!!).collection("address")
+            .addSnapshotListener { value, error ->
+                if (error != null || value == null) {
+                    viewModelScope.launch {
+                        _address.emit(Resource.Error(error?.message.toString()))
+                    }
+                } else {
+                    val addresses = value.toObjects(Address::class.java)
+                    viewModelScope.launch {
+                        _address.emit(Resource.Success(addresses))
                     }
                 }
 

@@ -48,6 +48,7 @@ class CartFragment : Fragment() {
         setupRecyclerView()
 
         binding.btnCheckout.setOnClickListener {
+
             findNavController().navigate(R.id.action_cartFragment_to_billingFragment)
         }
 
@@ -56,9 +57,7 @@ class CartFragment : Fragment() {
                 when (it) {
                     is Resource.Success -> {
                         Toast.makeText(
-                            requireContext(),
-                            "item deleted successfully",
-                            Toast.LENGTH_SHORT
+                            requireContext(), "item deleted successfully", Toast.LENGTH_SHORT
                         ).show()
                     }
 

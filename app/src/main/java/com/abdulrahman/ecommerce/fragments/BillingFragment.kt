@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
@@ -44,6 +45,13 @@ class BillingFragment : Fragment() {
         setupAddressRecyclerView()
         setupCheckoutProductsRecyclerView()
 
+
+        lifecycleScope.launch {
+            viewModel.productPrice.collect {
+                binding.tvTotalprice.text = "$ ${String.format("%.2f", (it))}"
+            }
+        }
+
         lifecycleScope.launch {
             viewModel.address.collect {
                 when (it) {
@@ -73,6 +81,7 @@ class BillingFragment : Fragment() {
                         Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
                             .show()
                     }
+
                     else -> {}
                 }
             }
