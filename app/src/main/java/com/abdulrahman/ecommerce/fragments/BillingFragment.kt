@@ -7,19 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
-import com.abdulrahman.ecommerce.paging.PagingAdapter
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
 import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -89,28 +85,14 @@ class BillingFragment : Fragment() {
             }
         }
         //implementing stripe payment
-        request = StringRequest(Request.Method.POST,"")
+        request = StringRequest(Request.Method.POST, "https://api.com/v1/customers", {response ->
 
 
 
+        }, {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        })
 
 
 
@@ -126,6 +108,7 @@ class BillingFragment : Fragment() {
 
 
     }
+
 
     private fun setupAddressRecyclerView() {
         addressAdapter = AddressRecyclerViewAdapter()
