@@ -19,6 +19,8 @@ import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
 import com.abdulrahman.ecommerce.paging.PagingAdapter
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -28,6 +30,7 @@ class BillingFragment : Fragment() {
     private val viewModel by viewModels<BillingViewModel>()
     private lateinit var addressAdapter: AddressRecyclerViewAdapter
     private lateinit var checkoutProductsAdapter: CheckoutProductRecyclerViewAdapter
+    private lateinit var request: StringRequest
 
 
     override fun onCreateView(
@@ -45,7 +48,6 @@ class BillingFragment : Fragment() {
 
         setupAddressRecyclerView()
         setupCheckoutProductsRecyclerView()
-
 
         lifecycleScope.launch {
             viewModel.productPrice.collect {
@@ -86,6 +88,41 @@ class BillingFragment : Fragment() {
                 }
             }
         }
+        //implementing stripe payment
+        request = StringRequest(Request.Method.POST,"")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
