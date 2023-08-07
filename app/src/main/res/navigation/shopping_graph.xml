@@ -60,8 +60,5 @@
         android:name="com.abdulrahman.ecommerce.fragments.BillingFragment"
         android:label="fragment_billing"
         tools:layout="@layout/fragment_billing" >
-        <argument
-            android:name="totalPrice"
-            app:argType="string" />
     </fragment>
 </navigation>

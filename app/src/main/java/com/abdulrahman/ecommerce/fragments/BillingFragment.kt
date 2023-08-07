@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-
 class BillingFragment : Fragment() {
     private lateinit var binding: FragmentBillingBinding
     private val viewModel by viewModels<BillingViewModel>()
@@ -38,6 +38,7 @@ class BillingFragment : Fragment() {
         binding = FragmentBillingBinding.inflate(layoutInflater)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,7 +70,6 @@ class BillingFragment : Fragment() {
                 }
             }
         }
-
         lifecycleScope.launch {
             viewModel.product.collect {
                 when (it) {
