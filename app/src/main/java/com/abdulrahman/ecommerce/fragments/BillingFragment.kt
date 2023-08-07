@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
+import com.abdulrahman.ecommerce.util.Constants
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
+import com.stripe.android.PaymentConfiguration
+import com.stripe.android.paymentsheet.PaymentSheet
+import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,18 +27,23 @@ class BillingFragment : Fragment() {
     private val viewModel by viewModels<BillingViewModel>()
     private lateinit var addressAdapter: AddressRecyclerViewAdapter
     private lateinit var checkoutProductsAdapter: CheckoutProductRecyclerViewAdapter
-    private lateinit var request: StringRequest
+
+    private lateinit var paymentSheet: PaymentSheet
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        PaymentConfiguration.init(requireContext(), Constants.PUBLISHABLE_KEY)
+        paymentSheet = PaymentSheet(this) {
+            onPaymentSheetResult(it)
+        }
         // Inflate the layout for this fragment
         binding = FragmentBillingBinding.inflate(layoutInflater)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,29 +90,6 @@ class BillingFragment : Fragment() {
                 }
             }
         }
-        //implementing stripe payment
-        request = StringRequest(Request.Method.POST, "https://api.com/v1/customers", {response ->
-
-
-
-        }, {
-
-
-        })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -119,6 +102,7 @@ class BillingFragment : Fragment() {
         }
     }
 
+
     private fun setupCheckoutProductsRecyclerView() {
         checkoutProductsAdapter = CheckoutProductRecyclerViewAdapter()
         binding.rvProducts.apply {
@@ -126,5 +110,10 @@ class BillingFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = checkoutProductsAdapter
         }
+    }
+
+    private fun onPaymentSheetResult(it: PaymentSheetResult) {
+
+
     }
 }
