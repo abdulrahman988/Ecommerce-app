@@ -6,35 +6,47 @@ import com.abdulrahman.ecommerce.util.Constants
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.jvm.Throws
 
-class NetworkPayment {
-    private lateinit var customerId: String
-    private lateinit var ephemeralKey: String
-    private lateinit var clientSecret: String
+object NetworkPayment {
+
+    lateinit var customerId: String
+    lateinit var ephemeralKey: String
+    lateinit var clientSecret: String
+
+//     var customerId: String = ""
+//     var ephemeralKey: String = ""
+//     var clientSecret: String = ""
+
+
+    private var _paymentList = MutableStateFlow(ThirdPartyResponse())
+    var paymentList = _paymentList.asStateFlow()
 
     //111
-    fun getCustomerId(context: Context) {
+    fun getCustomerId(context: Context, totalCost: Float) {
         val request: StringRequest = object :
-            StringRequest(Request.Method.POST, "https://api.com/v1/customers", { response ->
+            StringRequest(Request.Method.POST, "https://api.stripe.com/v1/customers", { response ->
                 try {
                     val jsonObject = JSONObject(response)
                     customerId = jsonObject.getString("id")
-                    Toast.makeText(context, customerId, Toast.LENGTH_SHORT).show()
-                    getEphemeralKey(context)
+                    getEphemeralKey(customerId, context, totalCost)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             }, { error ->
-                Toast.makeText(context, error.localizedMessage, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, error.localizedMessage, Toast.LENGTH_SHORT).show()
             }) {
             @Throws(AuthFailureError::class)
-            override fun getHeaders(): MutableMap<String, String> {
-                val header: HashMap<String, String> = HashMap<String, String>()
+            override fun getHeaders(): Map<String, String> {
+                val header: HashMap<String, String> = HashMap()
                 header["Authorization"] = "Bearer ${Constants.SECRET_KEY}"
                 return header
             }
@@ -46,19 +58,18 @@ class NetworkPayment {
 
 
     //222
-    fun getEphemeralKey(context: Context) {
+    fun getEphemeralKey(customerId: String, context: Context, totalCost: Float) {
         val request: StringRequest = object :
-            StringRequest(Request.Method.POST, "https://api.com/v1/ephemeral_keys", { response ->
+            StringRequest(Request.Method.POST, "https://api.stripe.com/v1/ephemeral_keys", { response ->
                 try {
                     val jsonObject = JSONObject(response)
-                    customerId = jsonObject.getString("id")
-//                    Toast.makeText(context, customerId, Toast.LENGTH_SHORT).show()
-                    getClientSecret(context,customerId, ephemeralKey)
+                    ephemeralKey = jsonObject.getString("id")
+                    getClientSecret(context, customerId, totalCost)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             }, { error ->
-                Toast.makeText(context, error.localizedMessage, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, error.localizedMessage, Toast.LENGTH_SHORT).show()
             }) {
 
             @Throws(AuthFailureError::class)
@@ -70,7 +81,7 @@ class NetworkPayment {
             }
 
             @Throws(AuthFailureError::class)
-            override fun getParams(): MutableMap<String, String>? {
+            override fun getParams(): MutableMap<String, String> {
                 val params: HashMap<String, String> = HashMap<String, String>()
                 params["customer"] = customerId
                 return params
@@ -83,33 +94,36 @@ class NetworkPayment {
 
 
     //33
-    private fun getClientSecret(context: Context,customerId: String, ephemeralKey: String) {
+    private fun getClientSecret(context: Context, customerId: String, totalCost: Float) {
         val request: StringRequest = object :
-            StringRequest(Request.Method.POST, "https://api.com/v1/payment_intents", { response ->
+            StringRequest(Request.Method.POST, "https://api.stripe.com/v1/payment_intents", { response ->
                 try {
                     val jsonObject = JSONObject(response)
                     clientSecret = jsonObject.getString("client_secret")
-                    Toast.makeText(context, clientSecret, Toast.LENGTH_SHORT).show()
+                    _paymentList.value = ThirdPartyResponse(
+                        customerId, ephemeralKey,
+                        clientSecret
+                    )
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             }, { error ->
-                Toast.makeText(context, error.localizedMessage, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, error.localizedMessage, Toast.LENGTH_SHORT).show()
             }) {
 
 
             @Throws(AuthFailureError::class)
             override fun getHeaders(): MutableMap<String, String> {
-                val header: HashMap<String, String> = HashMap<String, String>()
+                val header: HashMap<String, String> = HashMap()
                 header["Authorization"] = "Bearer ${Constants.SECRET_KEY}"
                 return header
             }
 
             @Throws(AuthFailureError::class)
-            override fun getParams(): MutableMap<String, String>? {
-                val params: HashMap<String, String> = HashMap<String, String>()
+            override fun getParams(): MutableMap<String, String> {
+                val params: HashMap<String, String> = HashMap()
                 params["customer"] = customerId
-                params["amount"] = "100"+"00 "
+                params["amount"] = "${totalCost}"
                 params["currency"] = "USD"
                 params["automatic_payment_methods[enabled"] = "true"
                 return params

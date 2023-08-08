@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
+import com.abdulrahman.ecommerce.payment.NetworkPayment
 import com.abdulrahman.ecommerce.util.Constants
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
@@ -19,6 +20,8 @@ import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -40,6 +43,7 @@ class BillingFragment : Fragment() {
         paymentSheet = PaymentSheet(this) {
             onPaymentSheetResult(it)
         }
+        NetworkPayment.getCustomerId(requireContext(), 11111f)
         // Inflate the layout for this fragment
         binding = FragmentBillingBinding.inflate(layoutInflater)
         return binding.root
@@ -50,6 +54,11 @@ class BillingFragment : Fragment() {
 
         setupAddressRecyclerView()
         setupCheckoutProductsRecyclerView()
+
+
+        binding.btnPlaceOlder.setOnClickListener {
+            paymentFlow()
+        }
 
         lifecycleScope.launch {
             viewModel.productPrice.collect {
@@ -92,7 +101,6 @@ class BillingFragment : Fragment() {
         }
     }
 
-
     private fun setupAddressRecyclerView() {
         addressAdapter = AddressRecyclerViewAdapter()
         binding.rvAdresses.apply {
@@ -112,8 +120,51 @@ class BillingFragment : Fragment() {
         }
     }
 
+
     private fun onPaymentSheetResult(it: PaymentSheetResult) {
+        if (it is PaymentSheetResult.Completed) {
+            Toast.makeText(requireContext(), "Payment Success", Toast.LENGTH_SHORT).show()
+        }
+    }
 
-
+    private fun paymentFlow() {
+        lifecycleScope.launch(Dispatchers.Main){
+            delay(3000)
+            paymentSheet.presentWithPaymentIntent(
+                NetworkPayment.clientSecret, PaymentSheet.Configuration(
+                    "asdasd",
+                    PaymentSheet.CustomerConfiguration(
+                        NetworkPayment.customerId,
+                        NetworkPayment.ephemeralKey
+                    )
+                )
+            )
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
