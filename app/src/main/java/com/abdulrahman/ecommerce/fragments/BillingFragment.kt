@@ -71,6 +71,9 @@ class BillingFragment : Fragment() {
             }
         }
 
+
+
+
         lifecycleScope.launch {
             viewModel.address.collect {
                 when (it) {
