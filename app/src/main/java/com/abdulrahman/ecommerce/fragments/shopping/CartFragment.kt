@@ -19,6 +19,7 @@ import com.abdulrahman.ecommerce.data.CartProduct
 import com.abdulrahman.ecommerce.databinding.FragmentCartBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.CartViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -130,5 +131,16 @@ class CartFragment : Fragment() {
 
     companion object {
         const val TAG = "cart fragment"
+    }
+
+    private fun showBottomViewNavigationBar() {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.VISIBLE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomViewNavigationBar()
     }
 }

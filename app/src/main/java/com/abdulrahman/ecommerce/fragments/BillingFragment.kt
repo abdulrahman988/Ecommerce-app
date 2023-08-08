@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
@@ -17,6 +18,7 @@ import com.abdulrahman.ecommerce.payment.NetworkPayment
 import com.abdulrahman.ecommerce.util.Constants
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -40,6 +42,7 @@ class BillingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        hideBottomViewNavigationBar()
         PaymentConfiguration.init(requireContext(), Constants.PUBLISHABLE_KEY)
         paymentSheet = PaymentSheet(this) {
             onPaymentSheetResult(it)
@@ -147,6 +150,11 @@ class BillingFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun hideBottomViewNavigationBar(){
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.GONE
     }
 }
 
