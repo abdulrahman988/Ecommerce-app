@@ -1,6 +1,7 @@
 package com.abdulrahman.ecommerce.payment
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.abdulrahman.ecommerce.util.Constants
 import com.android.volley.AuthFailureError
@@ -94,6 +95,8 @@ object NetworkPayment {
     }
 
     private fun getClientSecret(context: Context, customerId: String, totalCost: Float) {
+
+        Log.d("clientSecret", "getClientSecret: $totalCost")
         // Make a network request to get the client secret
         val request: StringRequest = object : StringRequest(
             Request.Method.POST,
@@ -124,7 +127,7 @@ object NetworkPayment {
             override fun getParams(): MutableMap<String, String> {
                 val params: HashMap<String, String> = HashMap()
                 params["customer"] = customerId
-                params["amount"] = "1000"
+                params["amount"] = "${totalCost.toInt() * 100}"
                 params["currency"] = "USD"
                 params["automatic_payment_methods[enabled"] = "true"
                 return params

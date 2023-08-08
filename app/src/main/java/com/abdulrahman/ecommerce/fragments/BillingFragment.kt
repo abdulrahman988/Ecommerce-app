@@ -46,9 +46,6 @@ class BillingFragment : Fragment() {
         }
 
 
-        NetworkPayment.startPaymentFlow(requireContext(), 11111f)
-
-
         // Inflate the layout for this fragment
         binding = FragmentBillingBinding.inflate(layoutInflater)
         return binding.root
@@ -67,7 +64,10 @@ class BillingFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.productPrice.collect {
-                binding.tvTotalprice.text = "$ ${String.format("%.2f", (it))}"
+                it?.let {
+                    NetworkPayment.startPaymentFlow(requireContext(), it)
+                    binding.tvTotalprice.text = "$ ${String.format("%.2f", (it))}"
+                }
             }
         }
 
@@ -133,7 +133,7 @@ class BillingFragment : Fragment() {
     }
 
     private fun paymentFlow() {
-        lifecycleScope.launch(Dispatchers.Main){
+        lifecycleScope.launch(Dispatchers.Main) {
             delay(3000)
             paymentSheet.presentWithPaymentIntent(
                 NetworkPayment.clientSecret, PaymentSheet.Configuration(
