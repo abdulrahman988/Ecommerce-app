@@ -1,17 +1,24 @@
 package com.abdulrahman.ecommerce.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdulrahman.ecommerce.data.Address
 import com.abdulrahman.ecommerce.data.CartProduct
+import com.abdulrahman.ecommerce.data.Order
 import com.abdulrahman.ecommerce.data.Product
+import com.abdulrahman.ecommerce.payment.NetworkPayment
+import com.abdulrahman.ecommerce.payment.ThirdPartyResponse
 import com.abdulrahman.ecommerce.util.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +29,9 @@ class BillingViewModel @Inject constructor(
     init {
         getAddresses()
         getProducts()
+
+
+
     }
 
     private val _address = MutableStateFlow<Resource<List<Address>>>(Resource.Unspecified())
@@ -29,6 +39,10 @@ class BillingViewModel @Inject constructor(
 
     private val _product = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
     val product = _product.asStateFlow()
+
+
+    private val _order = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
+    val order = _order.asStateFlow()
 
 
     private var price = 0f
@@ -96,6 +110,21 @@ class BillingViewModel @Inject constructor(
                     }
                 }
 
+            }
+    }
+
+    //payment
+
+    fun createOrder(order: Order){
+        db.collection("user").document(auth.uid!!).collection("order").document().set(order)
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    _order.emit(Resource.Success(order))
+                }
+            }.addOnFailureListener {
+                viewModelScope.launch {
+                    _order.emit(Resource.Error(it.message.toString()))
+                }
             }
 
     }
