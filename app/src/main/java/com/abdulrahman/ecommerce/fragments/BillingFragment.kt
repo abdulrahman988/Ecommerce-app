@@ -57,7 +57,6 @@ class BillingFragment : Fragment() {
         setupAddressRecyclerView()
         setupCheckoutProductsRecyclerView()
 
-
         binding.btnPlaceOlder.setOnClickListener {
             paymentFlow()
         }
