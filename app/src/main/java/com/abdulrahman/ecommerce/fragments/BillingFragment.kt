@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
+import com.abdulrahman.ecommerce.data.Order
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
 import com.abdulrahman.ecommerce.payment.NetworkPayment
 import com.abdulrahman.ecommerce.util.Constants
@@ -26,7 +27,10 @@ import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import java.util.UUID
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class BillingFragment : Fragment() {
@@ -151,15 +155,15 @@ class BillingFragment : Fragment() {
     private fun onPaymentSheetResult(it: PaymentSheetResult) {
         if (it is PaymentSheetResult.Completed) {
             Toast.makeText(requireContext(), "Payment Success", Toast.LENGTH_SHORT).show()
+            createOrder()
         }
     }
 
     private fun paymentFlow() {
         lifecycleScope.launch(Dispatchers.Main) {
-            delay(3000)
             paymentSheet.presentWithPaymentIntent(
                 NetworkPayment.clientSecret, PaymentSheet.Configuration(
-                    "asdasd",
+                    "my app",
                     PaymentSheet.CustomerConfiguration(
                         NetworkPayment.customerId,
                         NetworkPayment.ephemeralKey
@@ -170,16 +174,34 @@ class BillingFragment : Fragment() {
     }
 
     private fun checkPaymentType() {
-        if (binding.radioButtonOption1.isChecked){
+        if (binding.radioButtonOption1.isChecked) {
             //payment is cash on delivery
+            checkAddressesSelected()
 
-        }else if (binding.radioButtonOption2.isChecked){
+        } else if (binding.radioButtonOption2.isChecked) {
             //payment is online
             paymentFlow()
 
-        }else{
-            Snackbar.make(binding.btnPlaceOlder,"please choose method of payment",Snackbar.LENGTH_SHORT).show()
+        } else {
+            Snackbar.make(
+                binding.btnPlaceOlder,
+                "please choose method of payment",
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
+    }
+
+    private fun checkAddressesSelected() {
+
+    }
+
+    private fun createOrder() {
+        var totalPrice: Float = 0f
+        lifecycleScope.launch {
+             totalPrice = viewModel.productPrice.last()!!
+        }
+
+//        val order = Order(UUID.randomUUID().toString(), totalPrice, contactEmail ,createdAt,productList,selectedAddress,paymentType )
     }
 }
 

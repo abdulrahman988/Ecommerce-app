@@ -31,7 +31,6 @@ class BillingViewModel @Inject constructor(
         getProducts()
 
 
-
     }
 
     private val _address = MutableStateFlow<Resource<List<Address>>>(Resource.Unspecified())
@@ -41,8 +40,11 @@ class BillingViewModel @Inject constructor(
     val product = _product.asStateFlow()
 
 
-    private val _order = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
-    val order = _order.asStateFlow()
+    private val _orderUser = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
+    val orderUser = _orderUser.asStateFlow()
+
+    private val _orderAdmin = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
+    val orderAdmin = _orderAdmin.asStateFlow()
 
 
     private var price = 0f
@@ -115,15 +117,31 @@ class BillingViewModel @Inject constructor(
 
     //payment
 
-    fun createOrder(order: Order){
-        db.collection("user").document(auth.uid!!).collection("order").document().set(order)
+    fun createOrder(order: Order) {
+        //create order collection to add orders to it where in admin app can see all orders added
+        db.collection("order")
+            .document(order.orderId)
+            .set(order)
             .addOnSuccessListener {
                 viewModelScope.launch {
-                    _order.emit(Resource.Success(order))
+                    _orderAdmin.value = Resource.Success(order)
                 }
             }.addOnFailureListener {
                 viewModelScope.launch {
-                    _order.emit(Resource.Error(it.message.toString()))
+                    _orderAdmin.value = Resource.Error(it.message.toString())
+                }
+            }
+
+
+        //add order to user
+        db.collection("order").document(auth.uid!!).collection("order").document().set(order)
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    _orderUser.value = Resource.Success(order)
+                }
+            }.addOnFailureListener {
+                viewModelScope.launch {
+                    _orderUser.value = Resource.Error(it.message.toString())
                 }
             }
 
