@@ -1,6 +1,5 @@
 package com.abdulrahman.ecommerce.fragments
 
-import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
@@ -19,6 +19,7 @@ import com.abdulrahman.ecommerce.util.Constants
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -60,9 +61,19 @@ class BillingFragment : Fragment() {
         setupAddressRecyclerView()
         setupCheckoutProductsRecyclerView()
 
-        binding.btnPlaceOlder.setOnClickListener {
-            paymentFlow()
+        binding.apply {
+            btnPlaceOlder.setOnClickListener {
+                checkPaymentType()
+            }
+            imgAddAddress.setOnClickListener {
+                findNavController().navigate(R.id.action_billingFragment_to_addressFragment)
+            }
+            imgBillingClose.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
+
+
 
         lifecycleScope.launch {
             viewModel.productPrice.collect {
@@ -120,7 +131,6 @@ class BillingFragment : Fragment() {
         }
     }
 
-
     private fun setupCheckoutProductsRecyclerView() {
         checkoutProductsAdapter = CheckoutProductRecyclerViewAdapter()
         binding.rvProducts.apply {
@@ -128,6 +138,13 @@ class BillingFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = checkoutProductsAdapter
         }
+    }
+
+
+    private fun hideBottomViewNavigationBar() {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.GONE
     }
 
 
@@ -152,9 +169,17 @@ class BillingFragment : Fragment() {
         }
     }
 
-    private fun hideBottomViewNavigationBar(){
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView?.visibility = View.GONE
+    private fun checkPaymentType() {
+        if (binding.radioButtonOption1.isChecked){
+            //payment is cash on delivery
+
+        }else if (binding.radioButtonOption2.isChecked){
+            //payment is online
+            paymentFlow()
+
+        }else{
+            Snackbar.make(binding.btnPlaceOlder,"please choose method of payment",Snackbar.LENGTH_SHORT).show()
+        }
     }
 }
 

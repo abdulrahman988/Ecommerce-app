@@ -60,5 +60,8 @@
         android:name="com.abdulrahman.ecommerce.fragments.BillingFragment"
         android:label="fragment_billing"
         tools:layout="@layout/fragment_billing" >
+        <action
+            android:id="@+id/action_billingFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
 </navigation>
