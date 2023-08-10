@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
+import com.abdulrahman.ecommerce.data.CartProduct
 import com.abdulrahman.ecommerce.data.Order
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
 import com.abdulrahman.ecommerce.payment.NetworkPayment
@@ -29,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import java.util.UUID
 import kotlin.random.Random
 
@@ -38,7 +40,7 @@ class BillingFragment : Fragment() {
     private val viewModel by viewModels<BillingViewModel>()
     private lateinit var addressAdapter: AddressRecyclerViewAdapter
     private lateinit var checkoutProductsAdapter: CheckoutProductRecyclerViewAdapter
-
+    private var selectedAddressPosition: Int = 0
     private lateinit var paymentSheet: PaymentSheet
 
 
@@ -197,11 +199,40 @@ class BillingFragment : Fragment() {
 
     private fun createOrder() {
         var totalPrice: Float = 0f
+
+
+        var orderProduct: List<CartProduct> = emptyList()
+
+        val email = viewModel.getContactEmail()
+
+        val date = Calendar.getInstance().time.time.toString()
         lifecycleScope.launch {
-             totalPrice = viewModel.productPrice.last()!!
+            totalPrice = viewModel.productPrice.last()!!
         }
 
-//        val order = Order(UUID.randomUUID().toString(), totalPrice, contactEmail ,createdAt,productList,selectedAddress,paymentType )
+        lifecycleScope.launch {
+            viewModel.product.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        orderProduct = it.data!!
+                    }
+
+                    else -> null
+                }
+            }
+
+
+//            val order = Order(
+//                UUID.randomUUID().toString(),
+//                totalPrice,
+//                email!!,
+//                date,
+//                orderProduct,
+//                selectedAddress,
+//                paymentType
+//            )
+        }
+
     }
 }
 

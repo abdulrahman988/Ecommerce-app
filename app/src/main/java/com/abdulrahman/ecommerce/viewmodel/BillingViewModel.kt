@@ -34,23 +34,22 @@ class BillingViewModel @Inject constructor(
     }
 
     private val _address = MutableStateFlow<Resource<List<Address>>>(Resource.Unspecified())
+
     val address = _address.asStateFlow()
-
     private val _product = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
+
     val product = _product.asStateFlow()
-
-
     private val _orderUser = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
+
+
     val orderUser = _orderUser.asStateFlow()
-
     private val _orderAdmin = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
+
     val orderAdmin = _orderAdmin.asStateFlow()
-
-
     private var price = 0f
+
+
     private var discounted = 0f
-
-
     val productPrice = product.map {
         when (it) {
             is Resource.Success -> {
@@ -61,13 +60,13 @@ class BillingViewModel @Inject constructor(
         }
     }
 
+
     private fun calculatePrice(cartProducts: List<CartProduct>): Float {
 
         return cartProducts.sumByDouble { cartProduct ->
             getProductPrice(cartProduct).toDouble()
         }.toFloat()
     }
-
 
     private fun getProductPrice(cartProduct: CartProduct): Float {
         if (cartProduct.product.offerPercentage?.equals(0) == true) {
@@ -79,6 +78,7 @@ class BillingViewModel @Inject constructor(
         }
         return price
     }
+
 
     private fun getProducts() {
         db.collection("user").document(auth.uid!!).collection("cart")
@@ -145,6 +145,10 @@ class BillingViewModel @Inject constructor(
                 }
             }
 
+    }
+
+    fun getContactEmail(): String? {
+       return auth.currentUser?.email
     }
 
 }
