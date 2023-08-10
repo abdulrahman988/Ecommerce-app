@@ -2,10 +2,13 @@ package com.abdulrahman.ecommerce.adapters
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.abdulrahman.ecommerce.R
@@ -33,10 +36,11 @@ class AddressRecyclerViewAdapter(
 
         if (singleItemSelectedPosition == position) {
             holder.bind(items[position])
-//            holder.itemView.background =
+            holder.itemView.setBackgroundResource(R.drawable.blue_background)
         } else {
             holder.bind(items[position])
-            holder.itemView.setBackgroundColor(Color.Transparent.hashCode())
+            holder.itemView.setBackgroundResource(R.drawable.white_line)
+
         }
     }
 
