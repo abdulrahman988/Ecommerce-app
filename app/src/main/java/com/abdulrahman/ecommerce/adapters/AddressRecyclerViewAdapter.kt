@@ -1,6 +1,8 @@
 package com.abdulrahman.ecommerce.adapters
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.ui.graphics.Color
@@ -12,7 +14,9 @@ import com.abdulrahman.ecommerce.data.Product
 import com.abdulrahman.ecommerce.databinding.AddressRvItemBinding
 import com.google.rpc.context.AttributeContext.Resource
 
-class AddressRecyclerViewAdapter() :
+class AddressRecyclerViewAdapter(
+    private val onClickListener: OnClickListener
+    ) :
     RecyclerView.Adapter<AddressRecyclerViewAdapter.AddressViewHolder>() {
 
     private var items: List<Address> = emptyList()
@@ -26,9 +30,10 @@ class AddressRecyclerViewAdapter() :
     }
 
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
+
         if (singleItemSelectedPosition == position) {
             holder.bind(items[position])
-            holder.itemView.setBackgroundColor(Color.Red.hashCode())
+//            holder.itemView.background =
         } else {
             holder.bind(items[position])
             holder.itemView.setBackgroundColor(Color.Transparent.hashCode())
@@ -41,22 +46,21 @@ class AddressRecyclerViewAdapter() :
 
     inner class AddressViewHolder(private val binding: AddressRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        init {
-            itemView.rootView.setOnClickListener {
-                setSingleSelection(adapterPosition)
-            }
-        }
+
         fun bind(address: Address) {
             binding.tvAddress.text = address.addressTitle
-//            binding.root.setOnClickListener {
-//                onClickListener.onClick(adapterPosition)
-//            }
+            binding.root.setOnClickListener {
+                onClickListener.onClick(address)
+                setSingleSelection(adapterPosition)
+
+            }
         }
     }
 
-    //    class OnClickListener(val clickListener: (position: Int) -> Unit) {
-//        fun onClick(position: Int) = clickListener(position)
-//    }
+    class OnClickListener(val clickListener: (address: Address) -> Unit) {
+        fun onClick(address: Address) = clickListener(address)
+    }
+
     private fun setSingleSelection(adapterPosition: Int) {
         if (adapterPosition == RecyclerView.NO_POSITION) return
         notifyItemChanged(singleItemSelectedPosition)

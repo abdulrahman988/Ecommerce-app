@@ -1,6 +1,7 @@
 package com.abdulrahman.ecommerce.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
 import com.abdulrahman.ecommerce.adapters.CheckoutProductRecyclerViewAdapter
+import com.abdulrahman.ecommerce.data.Address
 import com.abdulrahman.ecommerce.data.CartProduct
 import com.abdulrahman.ecommerce.data.Order
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
@@ -40,7 +42,7 @@ class BillingFragment : Fragment() {
     private val viewModel by viewModels<BillingViewModel>()
     private lateinit var addressAdapter: AddressRecyclerViewAdapter
     private lateinit var checkoutProductsAdapter: CheckoutProductRecyclerViewAdapter
-    private var selectedAddressPosition: Int = 0
+    private lateinit var selectedAddress: Address
     private lateinit var paymentSheet: PaymentSheet
 
 
@@ -66,6 +68,8 @@ class BillingFragment : Fragment() {
 
         setupAddressRecyclerView()
         setupCheckoutProductsRecyclerView()
+
+
 
         binding.apply {
             btnPlaceOlder.setOnClickListener {
@@ -129,7 +133,15 @@ class BillingFragment : Fragment() {
     }
 
     private fun setupAddressRecyclerView() {
-        addressAdapter = AddressRecyclerViewAdapter()
+        addressAdapter = AddressRecyclerViewAdapter(
+            AddressRecyclerViewAdapter.OnClickListener {
+                selectedAddress = it
+                Log.d(
+                    "addressAdapterSelected",
+                    "inside the adapter the selected address is ${selectedAddress.addressTitle}"
+                )
+            }
+        )
         binding.rvAdresses.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
