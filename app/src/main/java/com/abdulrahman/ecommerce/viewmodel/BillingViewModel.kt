@@ -142,6 +142,15 @@ class BillingViewModel @Inject constructor(
             }
     }
 
+    fun deleteCartProduct() {
+        db.collection("user").document(auth.uid!!).collection("cart").get()
+            .addOnSuccessListener { snapshot ->
+                for (document in snapshot.documents) {
+                    document.reference.delete()
+                }
+            }
+    }
+
 
     fun getContactEmail(): String? {
         return auth.currentUser?.email

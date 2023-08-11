@@ -33,7 +33,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 import java.util.UUID
 import kotlin.random.Random
 
@@ -86,6 +88,7 @@ class BillingFragment : Fragment() {
                         Toast.makeText(requireContext(), "cash payment is applied", Toast.LENGTH_SHORT)
                             .show()
                         viewModel.createOrder(createOrder("Cash"))
+                        viewModel.deleteCartProduct()
                     } else if (binding.radioButtonOption2.isChecked) {
                         //payment is online
                         paymentFlow()
@@ -194,6 +197,8 @@ class BillingFragment : Fragment() {
         if (it is PaymentSheetResult.Completed) {
             Toast.makeText(requireContext(), "Payment Success", Toast.LENGTH_SHORT).show()
             viewModel.createOrder(createOrder("Visa"))
+            viewModel.deleteCartProduct()
+
         }
     }
 
@@ -215,7 +220,13 @@ class BillingFragment : Fragment() {
         var totalPrice: Float = 0f
         var orderProduct: List<CartProduct> = emptyList()
         val email = viewModel.getContactEmail()
-        val date = Calendar.getInstance().time.time.toString()
+
+        val date = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat( "dd MMM yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(date)
+
+
+
         lifecycleScope.launch {
             viewModel.productPrice.collect{
                 totalPrice = it!!
@@ -239,7 +250,7 @@ class BillingFragment : Fragment() {
             UUID.randomUUID().toString(),
             totalPrice,
             email!!,
-            date,
+            formattedDate,
             orderProduct,
             selectedAddress,
             paymentType
