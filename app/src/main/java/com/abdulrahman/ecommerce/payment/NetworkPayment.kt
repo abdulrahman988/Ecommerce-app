@@ -128,6 +128,7 @@ object NetworkPayment {
                 val params: HashMap<String, String> = HashMap()
                 params["customer"] = customerId
                 params["amount"] = "${totalCost.toInt() * 100}"
+//                params["amount"] = "100000"
                 params["currency"] = "USD"
                 params["automatic_payment_methods[enabled"] = "true"
                 return params

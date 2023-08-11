@@ -1,6 +1,5 @@
 package com.abdulrahman.ecommerce.data
 
-import com.abdulrahman.ecommerce.util.PaymentType
 
 data class Order(
     val orderId: String,
@@ -9,6 +8,7 @@ data class Order(
     val createdAt: String,
     val productList: List<CartProduct>,
     val address: Address,
-    val paymentType: PaymentType
-
-)
+    val paymentType: String
+){
+    constructor():this("",0f,"","", emptyList(),Address(),"")
+}

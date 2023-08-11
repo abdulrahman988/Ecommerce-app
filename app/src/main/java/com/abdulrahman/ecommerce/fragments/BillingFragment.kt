@@ -20,6 +20,7 @@ import com.abdulrahman.ecommerce.data.Order
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
 import com.abdulrahman.ecommerce.payment.NetworkPayment
 import com.abdulrahman.ecommerce.util.Constants
+import com.abdulrahman.ecommerce.util.PaymentType
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -42,7 +43,7 @@ class BillingFragment : Fragment() {
     private val viewModel by viewModels<BillingViewModel>()
     private lateinit var addressAdapter: AddressRecyclerViewAdapter
     private lateinit var checkoutProductsAdapter: CheckoutProductRecyclerViewAdapter
-    private lateinit var selectedAddress: Address
+    private var selectedAddress: Address = Address()
     private lateinit var paymentSheet: PaymentSheet
 
 
@@ -73,8 +74,31 @@ class BillingFragment : Fragment() {
 
         binding.apply {
             btnPlaceOlder.setOnClickListener {
-                checkPaymentType()
+                if (binding.radioButtonOption1.isChecked) {
+                    //payment is cash on delivery
+                    Toast.makeText(requireContext(), "cash payment is applied", Toast.LENGTH_SHORT)
+                        .show()
+//                    createOrder()
+                    viewModel.createOrder(createOrder("Cash"))
+                } else if (binding.radioButtonOption2.isChecked) {
+                    //payment is online
+                    paymentFlow()
+                } else {
+                    Snackbar.make(
+                        binding.btnPlaceOlder,
+                        "please choose method of payment",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             }
+
+
+
+
+
+
+
+
             imgAddAddress.setOnClickListener {
                 findNavController().navigate(R.id.action_billingFragment_to_addressFragment)
             }
@@ -93,9 +117,6 @@ class BillingFragment : Fragment() {
                 }
             }
         }
-
-
-
 
         lifecycleScope.launch {
             viewModel.address.collect {
@@ -136,10 +157,6 @@ class BillingFragment : Fragment() {
         addressAdapter = AddressRecyclerViewAdapter(
             AddressRecyclerViewAdapter.OnClickListener {
                 selectedAddress = it
-                Log.d(
-                    "addressAdapterSelected",
-                    "inside the adapter the selected address is ${selectedAddress.addressTitle}"
-                )
             }
         )
         binding.rvAdresses.apply {
@@ -169,54 +186,28 @@ class BillingFragment : Fragment() {
     private fun onPaymentSheetResult(it: PaymentSheetResult) {
         if (it is PaymentSheetResult.Completed) {
             Toast.makeText(requireContext(), "Payment Success", Toast.LENGTH_SHORT).show()
-            createOrder()
+//            createOrder()
         }
     }
 
     private fun paymentFlow() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            paymentSheet.presentWithPaymentIntent(
-                NetworkPayment.clientSecret, PaymentSheet.Configuration(
-                    "my app",
-                    PaymentSheet.CustomerConfiguration(
-                        NetworkPayment.customerId,
-                        NetworkPayment.ephemeralKey
-                    )
+        paymentSheet.presentWithPaymentIntent(
+            NetworkPayment.clientSecret, PaymentSheet.Configuration(
+                "my app",
+                PaymentSheet.CustomerConfiguration(
+                    NetworkPayment.customerId,
+                    NetworkPayment.ephemeralKey
                 )
             )
-        }
+        )
     }
 
-    private fun checkPaymentType() {
-        if (binding.radioButtonOption1.isChecked) {
-            //payment is cash on delivery
-            checkAddressesSelected()
 
-        } else if (binding.radioButtonOption2.isChecked) {
-            //payment is online
-            paymentFlow()
-
-        } else {
-            Snackbar.make(
-                binding.btnPlaceOlder,
-                "please choose method of payment",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    private fun checkAddressesSelected() {
-
-    }
-
-    private fun createOrder() {
+    private fun createOrder(paymentType: String): Order {
+        var order = Order()
         var totalPrice: Float = 0f
-
-
         var orderProduct: List<CartProduct> = emptyList()
-
         val email = viewModel.getContactEmail()
-
         val date = Calendar.getInstance().time.time.toString()
         lifecycleScope.launch {
             totalPrice = viewModel.productPrice.last()!!
@@ -229,22 +220,22 @@ class BillingFragment : Fragment() {
                         orderProduct = it.data!!
                     }
 
-                    else -> null
+                    else -> {}
                 }
             }
-
-
-//            val order = Order(
-//                UUID.randomUUID().toString(),
-//                totalPrice,
-//                email!!,
-//                date,
-//                orderProduct,
-//                selectedAddress,
-//                paymentType
-//            )
         }
 
+
+        order = Order(
+            UUID.randomUUID().toString(),
+            totalPrice,
+            email!!,
+            date,
+            orderProduct,
+            selectedAddress,
+            paymentType
+        )
+        return order
     }
 }
 

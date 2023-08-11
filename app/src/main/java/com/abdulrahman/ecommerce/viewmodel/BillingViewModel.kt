@@ -29,23 +29,20 @@ class BillingViewModel @Inject constructor(
     init {
         getAddresses()
         getProducts()
-
-
     }
 
     private val _address = MutableStateFlow<Resource<List<Address>>>(Resource.Unspecified())
-
     val address = _address.asStateFlow()
+
     private val _product = MutableStateFlow<Resource<List<CartProduct>>>(Resource.Unspecified())
-
     val product = _product.asStateFlow()
+
     private val _orderUser = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
-
-
     val orderUser = _orderUser.asStateFlow()
-    private val _orderAdmin = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
 
+    private val _orderAdmin = MutableStateFlow<Resource<Order>>(Resource.Unspecified())
     val orderAdmin = _orderAdmin.asStateFlow()
+
     private var price = 0f
 
 
@@ -132,9 +129,8 @@ class BillingViewModel @Inject constructor(
                 }
             }
 
-
         //add order to user
-        db.collection("order").document(auth.uid!!).collection("order").document().set(order)
+        db.collection("user").document(auth.uid!!).collection("order").document().set(order)
             .addOnSuccessListener {
                 viewModelScope.launch {
                     _orderUser.value = Resource.Success(order)
@@ -144,11 +140,11 @@ class BillingViewModel @Inject constructor(
                     _orderUser.value = Resource.Error(it.message.toString())
                 }
             }
-
     }
 
+
     fun getContactEmail(): String? {
-       return auth.currentUser?.email
+        return auth.currentUser?.email
     }
 
 }
