@@ -2,6 +2,7 @@ package com.abdulrahman.ecommerce.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -89,6 +95,7 @@ class BillingFragment : Fragment() {
                             .show()
                         viewModel.createOrder(createOrder("Cash"))
                         viewModel.deleteCartProduct()
+                        orderCreatedSuccefully()
                     } else if (binding.radioButtonOption2.isChecked) {
                         //payment is online
                         paymentFlow()
@@ -198,6 +205,8 @@ class BillingFragment : Fragment() {
             Toast.makeText(requireContext(), "Payment Success", Toast.LENGTH_SHORT).show()
             viewModel.createOrder(createOrder("Visa"))
             viewModel.deleteCartProduct()
+            orderCreatedSuccefully()
+
 
         }
     }
@@ -256,6 +265,23 @@ class BillingFragment : Fragment() {
             paymentType
         )
         return order
+    }
+
+    private fun orderCreatedSuccefully(){
+        AestheticDialog.Builder(requireActivity(),DialogStyle.FLAT,DialogType.SUCCESS)
+            .setTitle("Success")
+            .setMessage("Order created succefully")
+            .setCancelable(false)
+            .setDarkMode(false)
+            .setGravity(Gravity.CENTER)
+            .setAnimation(DialogAnimation.SHRINK)
+            .setOnClickListener(object : OnDialogClickListener {
+                override fun onClick(dialog: AestheticDialog.Builder) {
+                    dialog.dismiss()
+                    findNavController().navigate(R.id.action_billingFragment_to_homeFragment)
+                }
+            })
+            .show()
     }
 }
 
