@@ -74,21 +74,28 @@ class BillingFragment : Fragment() {
 
         binding.apply {
             btnPlaceOlder.setOnClickListener {
-                if (binding.radioButtonOption1.isChecked) {
-                    //payment is cash on delivery
-                    Toast.makeText(requireContext(), "cash payment is applied", Toast.LENGTH_SHORT)
-                        .show()
-//                    createOrder()
-                    viewModel.createOrder(createOrder("Cash"))
-                } else if (binding.radioButtonOption2.isChecked) {
-                    //payment is online
-                    paymentFlow()
-                } else {
+                if (selectedAddress == Address()){
                     Snackbar.make(
                         binding.btnPlaceOlder,
-                        "please choose method of payment",
+                        "please choose shipping address",
                         Snackbar.LENGTH_SHORT
                     ).show()
+                }else{
+                    if (binding.radioButtonOption1.isChecked) {
+                        //payment is cash on delivery
+                        Toast.makeText(requireContext(), "cash payment is applied", Toast.LENGTH_SHORT)
+                            .show()
+                        viewModel.createOrder(createOrder("Cash"))
+                    } else if (binding.radioButtonOption2.isChecked) {
+                        //payment is online
+                        paymentFlow()
+                    } else {
+                        Snackbar.make(
+                            binding.btnPlaceOlder,
+                            "please choose method of payment",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
@@ -186,7 +193,7 @@ class BillingFragment : Fragment() {
     private fun onPaymentSheetResult(it: PaymentSheetResult) {
         if (it is PaymentSheetResult.Completed) {
             Toast.makeText(requireContext(), "Payment Success", Toast.LENGTH_SHORT).show()
-//            createOrder()
+            viewModel.createOrder(createOrder("Visa"))
         }
     }
 
@@ -210,7 +217,9 @@ class BillingFragment : Fragment() {
         val email = viewModel.getContactEmail()
         val date = Calendar.getInstance().time.time.toString()
         lifecycleScope.launch {
-            totalPrice = viewModel.productPrice.last()!!
+            viewModel.productPrice.collect{
+                totalPrice = it!!
+            }
         }
 
         lifecycleScope.launch {
