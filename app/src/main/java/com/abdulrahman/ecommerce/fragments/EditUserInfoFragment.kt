@@ -155,8 +155,9 @@ class EditUserInfoFragment : Fragment() {
             viewModel.update.collect {
                 when (it) {
                     is Resource.Success -> {
-                        profileUpdatedSuccefullyDialog()
+                        profileUpdatedSuccessfullyDialog()
                     }
+
                     is Resource.Error -> {
                         errorOccurred()
                     }
@@ -169,7 +170,7 @@ class EditUserInfoFragment : Fragment() {
 
     }
 
-    private fun profileUpdatedSuccefullyDialog() {
+    private fun profileUpdatedSuccessfullyDialog() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.FLAT, DialogType.SUCCESS)
             .setTitle("Success").setMessage("Profile updated succefully").setCancelable(false)
             .setDarkMode(false).setGravity(Gravity.CENTER).setAnimation(DialogAnimation.SHRINK)
