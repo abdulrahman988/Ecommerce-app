@@ -40,15 +40,15 @@ class EditProfileViewModel @Inject constructor(
     private val _mail = MutableStateFlow<Resource<String>>(Resource.Unspecified())
     val mail: Flow<Resource<String>> = _mail
 
-    private val _updateImage = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
+    private val _updateImage = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
 
-    private val _updateFirstName = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
+    private val _updateFirstName = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
 
-    private val _updateLastName = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
+    private val _updateLastName = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
 
 
-    private val _update = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
-    val update: Flow<Resource<Unit>> = _update
+    private val _update = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
+    val update: Flow<Resource<Int>> = _update
 
 
     private fun getProfileInfo() {
@@ -84,7 +84,7 @@ class EditProfileViewModel @Inject constructor(
                 Log.d("editProfileVM", "upload task ${it.toString()}")
                 db.collection("user").document(auth.uid!!).update("imagePath", it.toString())
                 viewModelScope.launch {
-                    _updateImage.emit(Resource.Success(Unit))
+                    _updateImage.emit(Resource.Success(0))
                 }
             }
         }.addOnFailureListener {
@@ -101,7 +101,7 @@ class EditProfileViewModel @Inject constructor(
             .addOnSuccessListener {
                 Log.d("editProfileVM", "first name updated successfully ")
                 viewModelScope.launch {
-                    _updateFirstName.emit(Resource.Success(Unit))
+                    _updateFirstName.emit(Resource.Success(0))
                 }
 
             }.addOnFailureListener {
@@ -114,7 +114,7 @@ class EditProfileViewModel @Inject constructor(
             .addOnSuccessListener {
                 Log.d("editProfileVM", "lastName updated successfully ")
                 viewModelScope.launch {
-                    _updateLastName.emit(Resource.Success(Unit))
+                    _updateLastName.emit(Resource.Success(0))
                 }
 
             }.addOnFailureListener {
@@ -138,10 +138,8 @@ class EditProfileViewModel @Inject constructor(
                 _updateLastName
             ) { updateImageResult, firstNameResult, lastNameResult ->
                 // Check if all three flows emitted Resource.Success
-                if (updateImageResult is Resource.Success
-                    || firstNameResult is Resource.Success
-                    || lastNameResult is Resource.Success) {
-                    _update.emit(Resource.Success(Unit))
+                if (updateImageResult is Resource.Success || firstNameResult is Resource.Success || lastNameResult is Resource.Success) {
+                    _update.emit(Resource.Success(0))
                 } else {
                     _update.emit(Resource.Error("Error"))
                 }
