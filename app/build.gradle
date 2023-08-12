@@ -10,12 +10,12 @@ apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.abdulrahman.ecommerce'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.abdulrahman.ecommerce"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -51,7 +51,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -66,7 +66,7 @@ dependencies {
     implementation 'br.com.simplepass:loading-button-android:2.2.0'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
 
     //circular image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -81,14 +81,14 @@ dependencies {
     implementation 'com.shuhart.stepview:stepview:1.5.1'
 
     //Android Ktx
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.0'
 
     //Dagger hilt
     implementation "com.google.dagger:hilt-android:2.46.1"
     kapt "com.google.dagger:hilt-compiler:2.46.1"
 
     //Firebase
-    implementation 'com.google.firebase:firebase-auth:22.1.0'
+    implementation 'com.google.firebase:firebase-auth:22.1.1'
 
     //Coroutines with firebase
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
@@ -99,11 +99,11 @@ dependencies {
 
 
     //Firebase
-    implementation 'com.google.firebase:firebase-auth-ktx:22.1.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.1.1'
 
 
 
-    def paging_version = "3.1.1"
+    def paging_version = "3.2.0"
 
     implementation("androidx.paging:paging-runtime:$paging_version")
 

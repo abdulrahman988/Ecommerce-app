@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.abdulrahman.ecommerce.util.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -64,7 +63,7 @@ class EditProfileViewModel @Inject constructor(
             }
     }
 
-     fun saveUserInfo(firstName: String, lastName: String, selectedImage: Uri) {
+    fun saveUserInfo(firstName: String, lastName: String, selectedImage: Uri) {
         val imageRef = storage.child("products/images/${UUID.randomUUID()}")
         val uploadTask = imageRef.putFile(selectedImage)
 
@@ -72,7 +71,7 @@ class EditProfileViewModel @Inject constructor(
             .addOnSuccessListener {
                 val downloadUrl = imageRef.downloadUrl
                 downloadUrl.addOnSuccessListener {
-//                    selectedImagesListString.add(it.toString())
+                    updateData(firstName, lastName, downloadUrl.toString())
                 }
             }
             .addOnFailureListener {
@@ -82,7 +81,12 @@ class EditProfileViewModel @Inject constructor(
 
     }
 
+    private fun updateData(firstName: String, lastName: String, imagePath: String) {
+        db.collection("user").document(auth.uid!!).update("firstName", firstName)
+        db.collection("user").document(auth.uid!!).update("lastName", lastName)
+        db.collection("user").document(auth.uid!!).update("imagePath", imagePath)
 
+    }
 }
 
 

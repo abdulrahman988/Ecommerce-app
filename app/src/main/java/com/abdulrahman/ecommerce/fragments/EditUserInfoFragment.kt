@@ -16,8 +16,6 @@ import androidx.navigation.fragment.findNavController
 import com.abdulrahman.ecommerce.databinding.FragmentEditUserInfoBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
