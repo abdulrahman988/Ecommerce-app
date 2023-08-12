@@ -12,7 +12,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/navy_blue"
         android:elevation="4dp"
         app:collapseIcon="@drawable/close_icon"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +26,7 @@
             android:src="@drawable/close_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+            app:tint="@color/black" />
 
         <TextView
             android:id="@+id/tvCart"
@@ -36,7 +35,7 @@
             android:layout_marginStart="25dp"
             android:fontFamily="@font/poppins_thin"
             android:text="My cart"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/ivCloseCart"

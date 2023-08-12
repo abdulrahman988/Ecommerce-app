@@ -22,11 +22,10 @@ class ProfileViewModel @Inject constructor(
     private val _profileImg = MutableStateFlow<Resource<String>>(Resource.Unspecified())
     val profileImg: Flow<Resource<String>> = _profileImg
 
-    private val _firstName = MutableStateFlow<Resource<String>>(Resource.Unspecified())
-    val firstName: Flow<Resource<String>> = _firstName
+    private val _name = MutableStateFlow<Resource<String>>(Resource.Unspecified())
+    val name: Flow<Resource<String>> = _name
 
-    private val _lastName = MutableStateFlow<Resource<String>>(Resource.Unspecified())
-    val lastName: Flow<Resource<String>> = _lastName
+
 
     private val _mail = MutableStateFlow<Resource<String>>(Resource.Unspecified())
     val mail: Flow<Resource<String>> = _mail
@@ -47,15 +46,13 @@ class ProfileViewModel @Inject constructor(
 
                 viewModelScope.launch {
                     _profileImg.emit(Resource.Success(imagePath))
-                    _firstName.emit(Resource.Success(firstName))
-                    _lastName.emit(Resource.Success(lastName))
+                    _name.emit(Resource.Success(firstName+lastName))
                     _mail.emit(Resource.Success(email))
                 }
             }.addOnFailureListener {e ->
                 viewModelScope.launch {
                     _profileImg.emit(Resource.Error(e.message))
-                    _firstName.emit(Resource.Error(e.message))
-                    _lastName.emit(Resource.Error(e.message))
+                    _name.emit(Resource.Error(e.message))
                     _mail.emit(Resource.Error(e.message))
                 }
             }

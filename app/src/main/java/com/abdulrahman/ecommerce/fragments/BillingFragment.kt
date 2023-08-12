@@ -1,7 +1,6 @@
 package com.abdulrahman.ecommerce.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,7 +20,6 @@ import com.abdulrahman.ecommerce.data.Order
 import com.abdulrahman.ecommerce.databinding.FragmentBillingBinding
 import com.abdulrahman.ecommerce.payment.NetworkPayment
 import com.abdulrahman.ecommerce.util.Constants
-import com.abdulrahman.ecommerce.util.PaymentType
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.BillingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -35,15 +33,11 @@ import com.thecode.aestheticdialogs.DialogStyle
 import com.thecode.aestheticdialogs.DialogType
 import com.thecode.aestheticdialogs.OnDialogClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.UUID
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class BillingFragment : Fragment() {
@@ -95,7 +89,7 @@ class BillingFragment : Fragment() {
                             .show()
                         viewModel.createOrder(createOrder("Cash"))
                         viewModel.deleteCartProduct()
-                        orderCreatedSuccefully()
+                        orderCreatedSuccefullyDialog()
                     } else if (binding.radioButtonOption2.isChecked) {
                         //payment is online
                         paymentFlow()
@@ -205,7 +199,7 @@ class BillingFragment : Fragment() {
             Toast.makeText(requireContext(), "Payment Success", Toast.LENGTH_SHORT).show()
             viewModel.createOrder(createOrder("Visa"))
             viewModel.deleteCartProduct()
-            orderCreatedSuccefully()
+            orderCreatedSuccefullyDialog()
 
 
         }
@@ -267,7 +261,7 @@ class BillingFragment : Fragment() {
         return order
     }
 
-    private fun orderCreatedSuccefully(){
+    private fun orderCreatedSuccefullyDialog(){
         AestheticDialog.Builder(requireActivity(),DialogStyle.FLAT,DialogType.SUCCESS)
             .setTitle("Success")
             .setMessage("Order created succefully")

@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_profileFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editUserInfoFragment"
+            app:destination="@id/editUserInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -67,4 +70,9 @@
             android:id="@+id/action_billingFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editUserInfoFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.EditUserInfoFragment"
+        android:label="fragment_edit_user_info"
+        tools:layout="@layout/fragment_edit_user_info" />
 </navigation>

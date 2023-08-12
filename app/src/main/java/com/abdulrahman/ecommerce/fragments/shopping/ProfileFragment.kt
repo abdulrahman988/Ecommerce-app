@@ -36,21 +36,18 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getProfileInfo()
 
-        binding.btnLogout.setOnClickListener {
-            viewModel.logout()
-//            startActivity(Intent(requireContext(), LoginRegisterActivity::class.java))
 
-            val direction = ProfileFragmentDirections.actionProfileFragmentToIntroductionFragment2()
-            findNavController().navigate(direction)
+//
+//            val direction = ProfileFragmentDirections.actionProfileFragmentToIntroductionFragment2()
+//            findNavController().navigate(direction)
 
-        }
 
 
         lifecycleScope.launch {
             viewModel.profileImg.collect {
                 when (it) {
                     is Resource.Success -> {
-                        Glide.with(this@ProfileFragment).load(it.data).into(binding.ivProfilePicture)
+                        Glide.with(this@ProfileFragment).load(it.data).into(binding.imgUser)
                     }
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
@@ -59,13 +56,12 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-
 
         lifecycleScope.launch {
-            viewModel.firstName.collect {
+            viewModel.name.collect {
                 when (it) {
                     is Resource.Success -> {
-                        binding.tvFirstName.text = it.data.toString()
+                        binding.tvUserName.text = it.data
                     }
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
@@ -75,39 +71,8 @@ class ProfileFragment : Fragment() {
             }
         }
 
-
-        lifecycleScope.launch {
-            viewModel.lastName.collect {
-                when (it) {
-                    is Resource.Success -> {
-                        binding.tvLastName.text = it.data.toString()
-                    }
-                    is Resource.Error -> {
-                        Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
-                    }
-                    else -> Unit
-                }
-            }
+        binding.constraintProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_editUserInfoFragment)
         }
-
-
-        lifecycleScope.launch {
-            viewModel.mail.collect {
-                when (it) {
-                    is Resource.Success -> {
-                        binding.tvEmail.text = it.data.toString()
-                    }
-                    is Resource.Error -> {
-                        Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
-                    }
-                    else -> Unit
-                }
-            }
-        }
-
-
-
-
-
     }
 }
