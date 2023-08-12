@@ -74,5 +74,9 @@
         android:id="@+id/editUserInfoFragment"
         android:name="com.abdulrahman.ecommerce.fragments.EditUserInfoFragment"
         android:label="fragment_edit_user_info"
-        tools:layout="@layout/fragment_edit_user_info" />
+        tools:layout="@layout/fragment_edit_user_info" >
+        <action
+            android:id="@+id/action_editUserInfoFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

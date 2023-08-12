@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.databinding.FragmentEditUserInfoBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.bumptech.glide.Glide
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,13 +33,11 @@ class EditUserInfoFragment : Fragment() {
     private lateinit var binding: FragmentEditUserInfoBinding
 
 
-
     private var selectedImage = Uri.EMPTY
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditUserInfoBinding.inflate(inflater)
         return binding.root
@@ -46,13 +51,16 @@ class EditUserInfoFragment : Fragment() {
             viewModel.profileImg.collect {
                 when (it) {
                     is Resource.Success -> {
-                        if (it.data?.isNotEmpty() == true){
-                            Glide.with(this@EditUserInfoFragment).load(it.data).into(binding.imgUser)
+                        if (it.data?.isNotEmpty() == true) {
+                            Glide.with(this@EditUserInfoFragment).load(it.data)
+                                .into(binding.imgUser)
                         }
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -64,9 +72,11 @@ class EditUserInfoFragment : Fragment() {
                     is Resource.Success -> {
                         binding.edFirstName.setText(it.data)
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -78,9 +88,11 @@ class EditUserInfoFragment : Fragment() {
                     is Resource.Success -> {
                         binding.edLastName.setText(it.data)
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -92,18 +104,21 @@ class EditUserInfoFragment : Fragment() {
                     is Resource.Success -> {
                         binding.edEmail.setText(it.data)
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
         }
 
+
+
         binding.ivCloseCart.setOnClickListener {
             findNavController().navigateUp()
         }
-
 
 
         val resultLauncher =
@@ -126,23 +141,50 @@ class EditUserInfoFragment : Fragment() {
 
 
 
-    binding.apply {
-        btnSaveProfile.setOnClickListener {
-            val firstName = edFirstName.text.toString()
-            val lastName = edLastName.text.toString()
-            viewModel.saveUserInfo(firstName, lastName, selectedImage)
+        binding.apply {
+            btnSaveProfile.setOnClickListener {
+                val firstName = edFirstName.text.toString()
+                val lastName = edLastName.text.toString()
+                viewModel.saveUserInfo(firstName, lastName, selectedImage)
+
+            }
+
         }
+
+        lifecycleScope.launch {
+            viewModel.update.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        profileUpdatedSuccefullyDialog()
+                    }
+                    is Resource.Error -> {
+                        errorOccurred()
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
 
     }
 
+    private fun profileUpdatedSuccefullyDialog() {
+        AestheticDialog.Builder(requireActivity(), DialogStyle.FLAT, DialogType.SUCCESS)
+            .setTitle("Success").setMessage("Profile updated succefully").setCancelable(false)
+            .setDarkMode(false).setGravity(Gravity.CENTER).setAnimation(DialogAnimation.SHRINK)
+            .setOnClickListener(object : OnDialogClickListener {
+                override fun onClick(dialog: AestheticDialog.Builder) {
+                    dialog.dismiss()
+                    findNavController().navigate(R.id.action_editUserInfoFragment_to_profileFragment)
+                }
+            }).show()
+    }
 
-
-
-
-
-
-
-
+    private fun errorOccurred() {
+        AestheticDialog.Builder(requireActivity(), DialogStyle.TOASTER, DialogType.ERROR)
+            .setTitle("Error").setMessage("Error Occurred please try again later  ")
+            .setCancelable(false).setDarkMode(false).setAnimation(DialogAnimation.SHRINK).show()
     }
 
 }
