@@ -121,7 +121,7 @@ class EditUserInfoFragment : Fragment() {
 
         binding.imgEdit.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
             intent.type = "image/*"
             resultLauncher.launch(intent)
         }
