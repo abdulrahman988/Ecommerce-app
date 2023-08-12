@@ -134,8 +134,8 @@ class EditProfileViewModel @Inject constructor(
         viewModelScope.launch {
             combine(
                 _updateImage,
-                _firstName,
-                _lastName
+                _updateFirstName,
+                _updateLastName
             ) { updateImageResult, firstNameResult, lastNameResult ->
                 // Check if all three flows emitted Resource.Success
                 if (updateImageResult is Resource.Success || firstNameResult is Resource.Success || lastNameResult is Resource.Success) {
