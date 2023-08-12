@@ -34,6 +34,7 @@ class EditUserInfoFragment : Fragment() {
 
 
     private var selectedImage = Uri.EMPTY
+    private var ssrsasd = Uri.EMPTY
 
 
     override fun onCreateView(
