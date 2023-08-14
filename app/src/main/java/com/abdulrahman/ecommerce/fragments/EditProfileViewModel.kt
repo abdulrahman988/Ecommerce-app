@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -26,6 +27,7 @@ class EditProfileViewModel @Inject constructor(
 
     init {
         getProfileInfo()
+
     }
 
     private val _profileImg = MutableStateFlow<Resource<String>>(Resource.Unspecified())
@@ -40,15 +42,17 @@ class EditProfileViewModel @Inject constructor(
     private val _mail = MutableStateFlow<Resource<String>>(Resource.Unspecified())
     val mail: Flow<Resource<String>> = _mail
 
-    private val _updateImage = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
+    private val _updateImage = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
+    val updateImage: Flow<Resource<Unit>> = _updateImage
 
-    private val _updateFirstName = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
+    private val _updateFirstName = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
+    val updateFirstName: Flow<Resource<Unit>> = _updateFirstName
 
-    private val _updateLastName = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
+    private val _updateLastName = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
+    val updateLastName: Flow<Resource<Unit>> = _updateLastName
 
 
-    private val _update = MutableStateFlow<Resource<Int>>(Resource.Unspecified())
-    val update: Flow<Resource<Int>> = _update
+
 
 
     private fun getProfileInfo() {
@@ -75,80 +79,71 @@ class EditProfileViewModel @Inject constructor(
     }
 
     private fun updateUserImage(selectedImage: Uri) {
-        val imageRef = storage.child("users/${UUID.randomUUID()}")
-        val uploadTask = imageRef.putFile(selectedImage)
+        if (selectedImage != Uri.EMPTY){
+            val imageRef = storage.child("users/${UUID.randomUUID()}")
+            val uploadTask = imageRef.putFile(selectedImage)
 
-        uploadTask.addOnSuccessListener {
-            val downloadUrl = imageRef.downloadUrl
-            downloadUrl.addOnSuccessListener {
-                Log.d("editProfileVM", "upload task ${it.toString()}")
-                db.collection("user").document(auth.uid!!).update("imagePath", it.toString())
+            uploadTask.addOnSuccessListener {
+                val downloadUrl = imageRef.downloadUrl
+                downloadUrl.addOnSuccessListener {
+//                Log.d("editProfileVM", "upload task ${it.toString()}")
+                    db.collection("user").document(auth.uid!!).update("imagePath", it.toString())
+                    viewModelScope.launch {
+                        _updateImage.emit(Resource.Success(Unit))
+                    }
+                }
+            }.addOnFailureListener {
+//            Log.d("editProfileVM", it.message.toString())
                 viewModelScope.launch {
-                    _updateImage.emit(Resource.Success(0))
+                    _updateImage.emit(Resource.Error(it.message))
                 }
             }
-        }.addOnFailureListener {
-            Log.d("editProfileVM", it.message.toString())
+        }else{
             viewModelScope.launch {
-                _updateImage.emit(Resource.Error(it.message))
+                _updateImage.emit(Resource.Success(Unit))
+//                Log.d("editProfileVM", "else branch occurs")
 
             }
         }
+
     }
 
     private fun updateUserName(firstName: String, lastName: String) {
         db.collection("user").document(auth.uid!!).update("firstName", firstName)
             .addOnSuccessListener {
-                Log.d("editProfileVM", "first name updated successfully ")
+//                Log.d("editProfileVM", "first name updated successfully ")
                 viewModelScope.launch {
-                    _updateFirstName.emit(Resource.Success(0))
+                    _updateFirstName.emit(Resource.Success(Unit))
                 }
 
             }.addOnFailureListener {
-                Log.d("editProfileVM", "first name $it")
+//                Log.d("editProfileVM", "first name $it")
                 viewModelScope.launch {
                     _updateFirstName.emit(Resource.Error(it.message))
                 }
             }
         db.collection("user").document(auth.uid!!).update("lastName", lastName)
             .addOnSuccessListener {
-                Log.d("editProfileVM", "lastName updated successfully ")
+//                Log.d("editProfileVM", "lastName updated successfully ")
                 viewModelScope.launch {
-                    _updateLastName.emit(Resource.Success(0))
+                    _updateLastName.emit(Resource.Success(Unit))
                 }
 
             }.addOnFailureListener {
-                Log.d("editProfileVM", "lastName $it")
+//                Log.d("editProfileVM", "lastName $it")
                 viewModelScope.launch {
                     _updateLastName.emit(Resource.Error(it.message))
                 }
             }
-
-
     }
 
-    fun saveUserInfo(firstName: String, lastName: String, selectedImage: Uri) {
+
+
+     fun saveUserInfo(firstName: String, lastName: String, selectedImage: Uri) {
         updateUserName(firstName, lastName)
-        updateUserImage(selectedImage)
-
-        viewModelScope.launch {
-            combine(
-                _updateImage,
-                _updateFirstName,
-                _updateLastName
-            ) { updateImageResult, firstNameResult, lastNameResult ->
-                // Check if all three flows emitted Resource.Success
-                if (updateImageResult is Resource.Success || firstNameResult is Resource.Success || lastNameResult is Resource.Success) {
-                    _update.emit(Resource.Success(0))
-                } else {
-                    _update.emit(Resource.Error("Error"))
-                }
-            }
-
-        }
+         updateUserImage(selectedImage)
     }
 }
-
 
 
 

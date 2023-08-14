@@ -46,7 +46,7 @@ class ProfileViewModel @Inject constructor(
 
                 viewModelScope.launch {
                     _profileImg.emit(Resource.Success(imagePath))
-                    _name.emit(Resource.Success(firstName+lastName))
+                    _name.emit(Resource.Success("$firstName $lastName"))
                     _mail.emit(Resource.Success(email))
                 }
             }.addOnFailureListener {e ->

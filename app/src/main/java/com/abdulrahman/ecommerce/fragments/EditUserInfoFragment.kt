@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +25,12 @@ import com.thecode.aestheticdialogs.DialogStyle
 import com.thecode.aestheticdialogs.DialogType
 import com.thecode.aestheticdialogs.OnDialogClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class EditUserInfoFragment : Fragment() {
@@ -146,24 +152,22 @@ class EditUserInfoFragment : Fragment() {
                 val firstName = edFirstName.text.toString()
                 val lastName = edLastName.text.toString()
                 viewModel.saveUserInfo(firstName, lastName, selectedImage)
-
             }
-
         }
 
-        lifecycleScope.launch {
-            viewModel.update.collect {
-                when (it) {
-                    is Resource.Success -> {
-                        profileUpdatedSuccefullyDialog()
-                    }
-                    is Resource.Error -> {
-                        errorOccurred()
-                    }
 
-                    else -> {}
+        lifecycleScope.launch {
+          combine(
+                viewModel.updateImage,
+                viewModel.updateFirstName,
+                viewModel.updateLastName,
+            ) { updateImage, updateFirstName, updateLastName ->
+                if (updateImage is Resource.Success && updateFirstName is Resource.Success && updateLastName is Resource.Success) {
+                    profileUpdatedSuccefullyDialog()
+                } else if (updateImage is Resource.Error || updateFirstName is Resource.Error || updateLastName is Resource.Error) {
+                    errorOccurred()
                 }
-            }
+            }.collect()
         }
 
 
@@ -186,5 +190,4 @@ class EditUserInfoFragment : Fragment() {
             .setTitle("Error").setMessage("Error Occurred please try again later  ")
             .setCancelable(false).setDarkMode(false).setAnimation(DialogAnimation.SHRINK).show()
     }
-
 }
