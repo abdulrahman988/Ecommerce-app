@@ -1,7 +1,6 @@
-package com.abdulrahman.ecommerce.fragments
+package com.abdulrahman.ecommerce.fragments.settings
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.abdulrahman.ecommerce.data.Address
 import com.abdulrahman.ecommerce.databinding.FragmentAddressBinding
-import com.abdulrahman.ecommerce.fragments.shopping.CartFragment
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.AddressViewModel
-import com.abdulrahman.ecommerce.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

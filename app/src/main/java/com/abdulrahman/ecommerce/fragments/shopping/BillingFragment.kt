@@ -1,4 +1,4 @@
-package com.abdulrahman.ecommerce.fragments
+package com.abdulrahman.ecommerce.fragments.shopping
 
 import android.os.Bundle
 import android.view.Gravity

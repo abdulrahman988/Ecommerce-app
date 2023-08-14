@@ -1,10 +1,9 @@
-package com.abdulrahman.ecommerce.fragments
+package com.abdulrahman.ecommerce.fragments.settings
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.databinding.FragmentEditUserInfoBinding
+import com.abdulrahman.ecommerce.viewmodel.EditProfileViewModel
 import com.abdulrahman.ecommerce.util.Resource
 import com.bumptech.glide.Glide
 import com.thecode.aestheticdialogs.AestheticDialog
@@ -26,11 +26,8 @@ import com.thecode.aestheticdialogs.DialogType
 import com.thecode.aestheticdialogs.OnDialogClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class EditUserInfoFragment : Fragment() {

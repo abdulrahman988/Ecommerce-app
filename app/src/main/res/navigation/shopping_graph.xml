@@ -55,12 +55,12 @@
         tools:layout="@layout/fragment_introduction" />
     <fragment
         android:id="@+id/addressFragment"
-        android:name="com.abdulrahman.ecommerce.fragments.AddressFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.settings.AddressFragment"
         android:label="fragment_address"
         tools:layout="@layout/fragment_address" />
     <fragment
         android:id="@+id/billingFragment"
-        android:name="com.abdulrahman.ecommerce.fragments.BillingFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.shopping.BillingFragment"
         android:label="fragment_billing"
         tools:layout="@layout/fragment_billing" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/editUserInfoFragment"
-        android:name="com.abdulrahman.ecommerce.fragments.EditUserInfoFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.settings.EditUserInfoFragment"
         android:label="fragment_edit_user_info"
         tools:layout="@layout/fragment_edit_user_info" >
         <action
