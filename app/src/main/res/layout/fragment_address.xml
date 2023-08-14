@@ -15,7 +15,6 @@
             android:id="@+id/toolbar_address"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/navy_blue"
             android:elevation="@dimen/_2sdp"
             app:collapseIcon="@drawable/close_icon"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -32,7 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
+                app:tint="@color/black" />
 
 
             <TextView
@@ -42,7 +41,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:fontFamily="@font/poppins_thin"
                 android:text="Address"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/img_address_close"
