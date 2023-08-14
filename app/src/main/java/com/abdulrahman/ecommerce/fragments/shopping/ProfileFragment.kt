@@ -40,7 +40,9 @@ class ProfileFragment : Fragment() {
 //
 //            val direction = ProfileFragmentDirections.actionProfileFragmentToIntroductionFragment2()
 //            findNavController().navigate(direction)
-
+        binding.linearAddress.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_addressSettingFragment)
+        }
 
 
         lifecycleScope.launch {

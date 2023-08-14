@@ -33,11 +33,11 @@
             app:popUpTo="@id/introductionFragment2"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_profileFragment_to_addressFragment"
-            app:destination="@id/addressFragment" />
-        <action
             android:id="@+id/action_profileFragment_to_editUserInfoFragment"
             app:destination="@id/editUserInfoFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addressSettingFragment"
+            app:destination="@id/addressSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -78,5 +78,14 @@
         <action
             android:id="@+id/action_editUserInfoFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressSettingFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.settings.AddressSettingFragment"
+        android:label="fragment_address_setting"
+        tools:layout="@layout/fragment_address_setting" >
+        <action
+            android:id="@+id/action_addressSettingFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
 </navigation>
