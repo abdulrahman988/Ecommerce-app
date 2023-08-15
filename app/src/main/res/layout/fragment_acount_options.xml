@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_100sdp"
             android:gravity="center"
-            android:text="The Right Address\n For Shopping\n Anyday"
-            android:textSize="@dimen/_31ssp"
+            android:text="Your Ultimate Electronics Shopping Destination\n Any Day, Every Day."
+            android:textSize="@dimen/_20ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +34,7 @@
             android:text="it's now very easy to reach\nthe best quality among the\n products on the internet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvRightAddressForShopping" />
 
@@ -41,26 +42,41 @@
         <Button
             android:id="@+id/buttonRegisterAccountOptionsFragment"
             style="@style/firstButtonStyle"
-            android:layout_width="@dimen/mediumButtonWidth"
+            android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
             android:layout_marginTop="@dimen/_40sdp"
             android:text="Register"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineLoginRight"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
             app:layout_constraintTop_toBottomOf="@+id/tvQuality" />
 
         <Button
             android:id="@+id/buttonLoginAccountOptionsFragment"
             style="@style/secondButtonStyle"
-            android:layout_width="@dimen/mediumButtonWidth"
+            android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
             android:layout_marginTop="12dp"
             android:text="Login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
+            app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
             app:layout_constraintTop_toBottomOf="@+id/buttonRegisterAccountOptionsFragment" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineLoginLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".09" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineLoginRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".9" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

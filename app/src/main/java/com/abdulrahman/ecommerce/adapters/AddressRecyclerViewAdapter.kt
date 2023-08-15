@@ -1,21 +1,12 @@
 package com.abdulrahman.ecommerce.adapters
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.data.Address
-import com.abdulrahman.ecommerce.data.Product
 import com.abdulrahman.ecommerce.databinding.AddressRvItemBinding
-import com.google.rpc.context.AttributeContext.Resource
 
 class AddressRecyclerViewAdapter(
     private val onClickListener: OnClickListener
@@ -36,7 +27,7 @@ class AddressRecyclerViewAdapter(
 
         if (singleItemSelectedPosition == position) {
             holder.bind(items[position])
-            holder.itemView.setBackgroundResource(R.drawable.blue_background)
+            holder.itemView.setBackgroundResource(R.drawable.dark_background)
         } else {
             holder.bind(items[position])
             holder.itemView.setBackgroundResource(R.drawable.white_line)

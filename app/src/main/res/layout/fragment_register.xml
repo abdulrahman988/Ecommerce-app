@@ -38,18 +38,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvLogin"
-            style="@style/h2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Do you have an account? login"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLetsRegister" />
-
 
         <EditText
             android:id="@+id/etFirstNameRegister"
@@ -61,7 +49,7 @@
             android:background="@drawable/white_background"
             app:layout_constraintEnd_toEndOf="@+id/guidelineLoginRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
-            app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+            app:layout_constraintTop_toBottomOf="@+id/tvLetsRegister" />
 
         <EditText
             android:id="@+id/etLastNameRegister"
@@ -108,11 +96,27 @@
             style="@style/firstButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_25sdp"
             android:text="Register"
             app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
             app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
             app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />
+
+        <TextView
+            android:id="@+id/tvLogin"
+            style="@style/h2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/do_you_have_an_account_login"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#353535"
     tools:context=".fragments.launchApp.IntroductionFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,23 +12,45 @@
         android:layout_height="match_parent">
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/navy_blue"/>
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/poppins_thin"
+            android:text="WELCOME"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_25ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tvText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/poppins_thin"
+            android:padding="@dimen/_15sdp"
+            android:text="Explore Electronics: Elevate Your Lifestyle. Discover mobiles, laptops, headphones, \nand TVs enhance your tech-savvy style."
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonIntroduction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/buttonIntroduction"
-            style="@style/secondButtonStyle"
-            android:layout_width="@dimen/smallButtonWidth"
+            style="@style/thirdButtonStyle"
+            android:layout_width="@dimen/mediumButtonWidth"
             android:layout_height="@dimen/smallButtonHeight"
-            android:layout_marginBottom="@dimen/_90sdp"
+            android:layout_marginBottom="64dp"
             android:text="Get Started"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

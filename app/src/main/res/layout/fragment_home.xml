@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.shopping.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,24 +13,34 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabRippleColor="@color/white"
-            app:tabSelectedTextColor="@color/white"
-            app:tabSelectedTextAppearance="@color/white"
-            android:background="@color/navy_blue"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="@dimen/smallButtonHeight"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/back_tabs"
+            app:tabIndicatorGravity="stretch"
+            app:tabIndicatorAnimationMode="fade"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:tabIndicatorAnimationDuration="@integer/material_motion_duration_short_1"
+            app:tabIndicatorColor="@color/dark"
+            app:tabIndicator="@drawable/back_tabs"
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:tabSelectedTextColor="@color/white"/>
+
+
+
+
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
