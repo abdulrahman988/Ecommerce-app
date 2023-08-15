@@ -24,14 +24,14 @@
 
             <ImageView
                 android:id="@+id/img_address_close"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:scaleType="centerInside"
                 android:src="@drawable/close_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
@@ -39,10 +39,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_thin"
                 android:text="Address"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_25ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/img_address_close"
                 app:layout_constraintStart_toEndOf="@id/img_address_close"

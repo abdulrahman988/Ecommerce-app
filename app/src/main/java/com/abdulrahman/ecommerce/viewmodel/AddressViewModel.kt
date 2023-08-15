@@ -7,8 +7,10 @@ import com.abdulrahman.ecommerce.util.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,8 +23,8 @@ class AddressViewModel @Inject constructor(
     private val _addNewAddress = MutableStateFlow<Resource<Address>>(Resource.Unspecified())
     val addNewAddress = _addNewAddress.asStateFlow()
 
-    private val _error = MutableStateFlow<Resource<String>>(Resource.Unspecified())
-    val error = _error.asStateFlow()
+    private val _error = Channel<Resource<String>>()
+    val error = _error.receiveAsFlow()
 
     fun addAddress(address: Address) {
         if (validateInputs(address)) {
@@ -41,7 +43,7 @@ class AddressViewModel @Inject constructor(
                 }
         }else{
             viewModelScope.launch {
-                _error.emit(Resource.Error("All fields are required"))
+                _error.send(Resource.Error("All fields are required"))
             }
         }
     }

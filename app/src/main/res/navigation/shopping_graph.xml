@@ -28,11 +28,6 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_introductionFragment2"
-            app:destination="@id/introductionFragment2"
-            app:popUpTo="@id/introductionFragment2"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_profileFragment_to_editUserInfoFragment"
             app:destination="@id/editUserInfoFragment" />
         <action
@@ -41,6 +36,9 @@
         <action
             android:id="@+id/action_profileFragment_to_ordersFragment"
             app:destination="@id/ordersFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_introductionFragment"
+            app:destination="@id/introductionFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -52,7 +50,7 @@
             app:argType="com.abdulrahman.ecommerce.data.Product" />
     </fragment>
     <fragment
-        android:id="@+id/introductionFragment2"
+        android:id="@+id/introductionFragment"
         android:name="com.abdulrahman.ecommerce.fragments.launchApp.IntroductionFragment"
         android:label="fragment_introduction"
         tools:layout="@layout/fragment_introduction" />

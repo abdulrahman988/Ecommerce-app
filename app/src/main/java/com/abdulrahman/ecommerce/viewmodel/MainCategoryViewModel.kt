@@ -18,6 +18,12 @@ class MainCategoryViewModel @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : ViewModel() {
 
+    init {
+        fetchSpecialProduct()
+        fetchBestDeals()
+        fetchBestProducts()
+    }
+
     private val _specialProducts = MutableStateFlow<Resource<List<Product>>>(Resource.Unspecified())
     val specialProducts: Flow<Resource<List<Product>>> = _specialProducts
 
@@ -28,15 +34,15 @@ class MainCategoryViewModel @Inject constructor(
     val bestProducts: Flow<Resource<List<Product>>> = _bestProducts
 
 
-    fun fetchSpecialProduct() {
-        viewModelScope.launch{
+    private fun fetchSpecialProduct() {
+        viewModelScope.launch {
             _specialProducts.emit(Resource.Loading())
         }
         firestore
             .collection("Products")
             .whereEqualTo("category", "Special Products")
             .get()
-            .addOnSuccessListener {result ->
+            .addOnSuccessListener { result ->
                 val specialProductsList = result.toObjects(Product::class.java)
                 viewModelScope.launch {
                     _specialProducts.emit(Resource.Success(specialProductsList))
@@ -48,15 +54,15 @@ class MainCategoryViewModel @Inject constructor(
             }
     }
 
-    fun fetchBestDeals() {
-        viewModelScope.launch{
+    private fun fetchBestDeals() {
+        viewModelScope.launch {
             _specialProducts.emit(Resource.Loading())
         }
         firestore
             .collection("Products")
             .whereEqualTo("category", "Best Deals")
             .get()
-            .addOnSuccessListener {result ->
+            .addOnSuccessListener { result ->
                 val bestDealsList = result.toObjects(Product::class.java)
                 viewModelScope.launch {
                     _bestDeals.emit(Resource.Success(bestDealsList))
@@ -68,15 +74,15 @@ class MainCategoryViewModel @Inject constructor(
             }
     }
 
-    fun fetchBestProducts() {
-        viewModelScope.launch{
+    private fun fetchBestProducts() {
+        viewModelScope.launch {
             _specialProducts.emit(Resource.Loading())
         }
         firestore
             .collection("Products")
             .whereEqualTo("category", "Best Products")
             .get()
-            .addOnSuccessListener {result ->
+            .addOnSuccessListener { result ->
                 val bestDealsList = result.toObjects(Product::class.java)
                 viewModelScope.launch {
                     _bestProducts.emit(Resource.Success(bestDealsList))
@@ -87,9 +93,6 @@ class MainCategoryViewModel @Inject constructor(
                 }
             }
     }
-
-
-
 
 
 }

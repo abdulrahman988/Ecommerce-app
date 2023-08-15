@@ -23,8 +23,9 @@
 
             <ImageView
                 android:id="@+id/img_address_close"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:scaleType="centerInside"
                 android:src="@drawable/close_icon"
                 app:tint="@color/black" />
@@ -35,17 +36,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_thin"
                 android:text="Address"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_25ssp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/img_address_add"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_30sdp"
                 android:scaleType="centerInside"
                 android:src="@drawable/plus_icon"
@@ -57,15 +59,11 @@
             android:id="@+id/addressRv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintEnd_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_address"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/address_details_rv_item"/>
-
-
-
-
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_address"
+            tools:listitem="@layout/address_details_rv_item" />
 
 
         <androidx.constraintlayout.widget.Guideline

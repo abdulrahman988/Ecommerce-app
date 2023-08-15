@@ -35,11 +35,12 @@ class BestDealsRecyclerViewAdapter(private val onClickListener: OnClickListener)
             binding.apply {
                 Glide.with(itemView).load(product.images[0]).into(tvProductImage)
                 tvProductName.text = product.name
-                tvProductOriginalPrice.text = "$ ${String.format("%.2f",(product.price))}"
+                tvProductOriginalPrice.text = "$ ${String.format("%.2f", (product.price))}"
                 tvProductOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                val discounted = (product.offerPercentage?.times(product.price))!! /100
+                val discounted = (product.offerPercentage?.times(product.price))!! / 100
 
-                tvProductDiscountedPrice.text = "$ ${String.format("%.2f",(product.price - discounted))}"
+                tvProductDiscountedPrice.text =
+                    "$ ${String.format("%.2f", (product.price - discounted))}"
                 root.setOnClickListener {
                     onClickListener.onClick(product)
                 }
@@ -78,6 +79,7 @@ class BestDealsRecyclerViewAdapter(private val onClickListener: OnClickListener)
             return oldProductList[oldItemPosition] == newProductList[newItemPosition]
         }
     }
+
     class OnClickListener(val clickListener: (product: Product) -> Unit) {
         fun onClick(product: Product) = clickListener(product)
     }

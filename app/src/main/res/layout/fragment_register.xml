@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.launchApp.RegisterFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineLoginLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".09"/>
+            app:layout_constraintGuide_percent=".09" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineLoginRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".9"/>
+            app:layout_constraintGuide_percent=".9" />
 
         <TextView
             android:id="@+id/tvLetsRegister"
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_100sdp"
             android:gravity="center"
-            android:text="Let's Register"
-            android:textSize="@dimen/_31ssp"
+            android:text="Create Account"
+            android:textSize="@dimen/_28ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,33 +45,35 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Do you have an account? login"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLetsRegister" />
 
 
+        <EditText
+            android:id="@+id/etFirstNameRegister"
+            style="@style/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:hint="First Name"
+            android:background="@drawable/white_background"
+            app:layout_constraintEnd_toEndOf="@+id/guidelineLoginRight"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
 
-    <EditText
-        android:id="@+id/etFirstNameRegister"
-        style="@style/editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:hint="First Name"
-        app:layout_constraintEnd_toEndOf="@+id/guidelineLoginRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
-        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
-
-    <EditText
-        android:id="@+id/etLastNameRegister"
-        style="@style/editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:hint="Last Name"
-        app:layout_constraintEnd_toEndOf="@+id/guidelineLoginRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
-        app:layout_constraintTop_toBottomOf="@+id/etFirstNameRegister" />
+        <EditText
+            android:id="@+id/etLastNameRegister"
+            style="@style/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:hint="Last Name"
+            android:background="@drawable/white_background"
+            app:layout_constraintEnd_toEndOf="@+id/guidelineLoginRight"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
+            app:layout_constraintTop_toBottomOf="@+id/etFirstNameRegister" />
 
 
         <EditText
@@ -81,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:hint="Email"
+            android:background="@drawable/white_background"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="@+id/guidelineLoginRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
@@ -93,46 +96,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:hint="Password"
+            android:background="@drawable/white_background"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="@+id/guidelineLoginRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
             app:layout_constraintTop_toBottomOf="@+id/etEmailRegister" />
 
 
-    <Button
-        android:id="@+id/buttonRegisterRegister"
-        style="@style/firstButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/mediumButtonHeight"
-        android:text="REGISTER"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
-        app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />
-
-
-        <TextView
-            android:id="@+id/facebookLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_40sdp"
-            android:layout_marginTop="12dp"
-            android:drawableLeft="@drawable/facebook_login"
-            android:padding="@dimen/_4sdp"
-            android:text="Facebook"
-            app:layout_constraintStart_toStartOf="@+id/guidelineLoginLeft"
-            app:layout_constraintTop_toBottomOf="@+id/buttonRegisterRegister" />
-
-        <TextView
-            android:id="@+id/GoogleLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_40sdp"
-            android:drawableLeft="@drawable/google_login"
-            android:padding="@dimen/_4sdp"
-            android:text="Google"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineLoginRight"
-            app:layout_constraintTop_toTopOf="@+id/facebookLogin" />
+        <Button
+            android:id="@+id/buttonRegisterRegister"
+            style="@style/firstButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/mediumButtonHeight"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Register"
+            app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
+            app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
+            app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

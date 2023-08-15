@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/cardViewItem">
@@ -47,7 +48,6 @@
             android:layout_marginStart="@dimen/_6sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProductImageCategory"
             app:layout_constraintTop_toBottomOf="@id/tvProductNameCategory" />
@@ -61,38 +61,34 @@
             android:layout_marginStart="@dimen/_6sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tvProductOfferPercentageCategory"
             app:layout_constraintStart_toEndOf="@id/ivProductImageCategory"
             app:layout_constraintTop_toBottomOf="@id/tvProductPriceCategory" />
 
-        <!-- Offer Percentage -->
-
-        <!-- Add to Cart Button -->
 
         <TextView
             android:id="@+id/tvProductOfferPercentageCategory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:text="Offer Percentage"
             android:textAlignment="center"
             android:textColor="@color/red"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddToCartCategory"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/btnAddToCartCategory"
-            app:layout_constraintTop_toTopOf="@+id/tvProductNameCategory" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnAddToCartCategory"
             style="@style/firstButtonStyle"
-            android:padding="@dimen/_4sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/_4sdp"
             android:text="Add to Cart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProductDiscountedPriceCategory" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivProductImageCategory"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

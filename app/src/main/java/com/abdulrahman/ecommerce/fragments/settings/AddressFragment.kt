@@ -1,6 +1,8 @@
 package com.abdulrahman.ecommerce.fragments.settings
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +11,16 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.data.Address
 import com.abdulrahman.ecommerce.databinding.FragmentAddressBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.AddressViewModel
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,11 +53,11 @@ class AddressFragment : Fragment() {
 
                     is Resource.Success -> {
                         binding.progressbarAddress.visibility = View.INVISIBLE
-                        findNavController().navigateUp()
+                        addressAddedSuccefullyDialog()
                     }
-                    
+
                     is Resource.Error -> {
-                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT).show()
+                        Log.d("AddressFragment", it.message.toString())
                     }
 
                     else -> Unit
@@ -75,9 +83,27 @@ class AddressFragment : Fragment() {
 
                 val address = Address(addressTitle, fullName, street, phone, city, state)
                 viewModel.addAddress(address)
+
             }
         }
         //this is a test to make
 
+    }
+
+    private fun addressAddedSuccefullyDialog() {
+        AestheticDialog.Builder(requireActivity(), DialogStyle.FLAT, DialogType.SUCCESS)
+            .setTitle("Success")
+            .setMessage("Address Added succefully")
+            .setCancelable(false)
+            .setDarkMode(false)
+            .setGravity(Gravity.CENTER)
+            .setAnimation(DialogAnimation.SHRINK)
+            .setOnClickListener(object : OnDialogClickListener {
+                override fun onClick(dialog: AestheticDialog.Builder) {
+                    dialog.dismiss()
+                    findNavController().navigateUp()
+                }
+            })
+            .show()
     }
 }

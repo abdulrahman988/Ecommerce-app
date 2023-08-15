@@ -19,6 +19,7 @@ import com.abdulrahman.ecommerce.databinding.FragmentEditUserInfoBinding
 import com.abdulrahman.ecommerce.viewmodel.EditProfileViewModel
 import com.abdulrahman.ecommerce.util.Resource
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.aestheticdialogs.DialogAnimation
 import com.thecode.aestheticdialogs.DialogStyle
@@ -49,6 +50,10 @@ class EditUserInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        hideBottomViewNavigationBar()
+
 
         lifecycleScope.launch {
             viewModel.profileImg.collect {
@@ -186,5 +191,11 @@ class EditUserInfoFragment : Fragment() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.TOASTER, DialogType.ERROR)
             .setTitle("Error").setMessage("Error Occurred please try again later  ")
             .setCancelable(false).setDarkMode(false).setAnimation(DialogAnimation.SHRINK).show()
+    }
+
+    private fun hideBottomViewNavigationBar() {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.INVISIBLE
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.settings.EditUserInfoFragment">
 
 
@@ -23,8 +23,9 @@
 
             <ImageView
                 android:id="@+id/ivCloseCart"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:scaleType="centerInside"
                 android:src="@drawable/close_icon"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,11 +36,11 @@
                 android:id="@+id/tvEditProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_thin"
                 android:text="Edit Profile"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_25ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/ivCloseCart"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,8 +52,8 @@
             android:id="@+id/img_user"
             android:layout_width="@dimen/_85sdp"
             android:layout_height="@dimen/_85sdp"
-            android:src="@drawable/profile_icon"
             android:layout_marginTop="@dimen/_15sdp"
+            android:src="@drawable/profile_icon"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/guideline1"
@@ -70,13 +71,13 @@
 
         <EditText
             android:id="@+id/ed_first_name"
+            style="@style/secondButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/poppins_light"
             android:gravity="center"
             android:hint="First Name"
-            style="@style/secondButtonStyle"
             android:singleLine="true"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -85,25 +86,25 @@
 
         <EditText
             android:id="@+id/ed_last_name"
+            style="@style/secondButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/poppins_light"
             android:gravity="center"
-            style="@style/secondButtonStyle"
             android:hint="Last Name"
-            android:textStyle="bold"
             android:singleLine="true"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@id/ed_first_name" />
 
         <EditText
             android:id="@+id/ed_email"
+            style="@style/secondButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            style="@style/secondButtonStyle"
             android:editable="false"
             android:fontFamily="@font/poppins_light"
             android:gravity="center"

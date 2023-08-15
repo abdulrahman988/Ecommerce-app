@@ -44,13 +44,8 @@ class MainCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchSpecialProduct()
         setupSpecialProductRecyclerView()
-
-        viewModel.fetchBestDeals()
         setupBestDealsRecyclerView()
-
-        viewModel.fetchBestProducts()
         setupBestProductsRecyclerView()
 
         lifecycleScope.launch {

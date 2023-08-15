@@ -18,6 +18,9 @@ class ProfileViewModel @Inject constructor(
     private val db: FirebaseFirestore
 ) : ViewModel() {
 
+    init {
+        getProfileInfo()
+    }
 
     private val _profileImg = MutableStateFlow<Resource<String>>(Resource.Unspecified())
     val profileImg: Flow<Resource<String>> = _profileImg
@@ -36,7 +39,7 @@ class ProfileViewModel @Inject constructor(
         auth.signOut()
     }
 
-    fun getProfileInfo() {
+    private fun getProfileInfo() {
         db.collection("user").document(auth.uid!!).get()
             .addOnSuccessListener {document ->
                 val imagePath = document.get("imagePath").toString()

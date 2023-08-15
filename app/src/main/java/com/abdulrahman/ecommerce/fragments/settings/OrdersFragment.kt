@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdulrahman.ecommerce.R
 import com.abdulrahman.ecommerce.adapters.AddressRecyclerViewAdapter
@@ -16,6 +17,7 @@ import com.abdulrahman.ecommerce.databinding.FragmentOrdersBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.OrdersViewModel
 import com.abdulrahman.ecommerce.viewmodel.ProfileViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -40,6 +42,11 @@ class OrdersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         setupOrdersRecyclerView()
+        hideBottomViewNavigationBar()
+
+        binding.imgOrderClose.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         lifecycleScope.launch {
             viewModel.orders.collect {
@@ -80,5 +87,12 @@ class OrdersFragment : Fragment() {
             adapter = ordersAdapter
         }
     }
+
+    private fun hideBottomViewNavigationBar() {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.INVISIBLE
+    }
+
 
 }

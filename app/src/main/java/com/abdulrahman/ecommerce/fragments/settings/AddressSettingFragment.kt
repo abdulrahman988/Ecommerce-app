@@ -19,6 +19,7 @@ import com.abdulrahman.ecommerce.fragments.shopping.CartFragment
 import com.abdulrahman.ecommerce.paging.PagingAdapter
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.AddressSettingViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -39,6 +40,11 @@ class AddressSettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         setupAddressRecyclerView()
+        hideBottomViewNavigationBar()
+
+        binding.imgAddressClose.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.imgAddressAdd.setOnClickListener {
             findNavController().navigate(R.id.action_addressSettingFragment_to_addressFragment)
@@ -97,5 +103,12 @@ class AddressSettingFragment : Fragment() {
         }
 
     }
+
+    private fun hideBottomViewNavigationBar() {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.INVISIBLE
+    }
+
 
 }

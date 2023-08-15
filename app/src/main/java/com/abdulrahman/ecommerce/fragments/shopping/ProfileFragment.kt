@@ -16,6 +16,7 @@ import com.abdulrahman.ecommerce.databinding.FragmentProfileBinding
 import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.ProfileViewModel
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -34,18 +35,19 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getProfileInfo()
 
 
-//
-//            val direction = ProfileFragmentDirections.actionProfileFragmentToIntroductionFragment2()
-//            findNavController().navigate(direction)
         binding.linearAddress.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_addressSettingFragment)
         }
 
         binding.allOrders.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_ordersFragment)
+        }
+
+        binding.linearLogout.setOnClickListener {
+            viewModel.logout()
+            findNavController().navigate(R.id.action_profileFragment_to_introductionFragment)
         }
 
 
@@ -56,9 +58,11 @@ class ProfileFragment : Fragment() {
                     is Resource.Success -> {
                         Glide.with(this@ProfileFragment).load(it.data).into(binding.imgUser)
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -70,9 +74,11 @@ class ProfileFragment : Fragment() {
                     is Resource.Success -> {
                         binding.tvUserName.text = it.data
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -81,5 +87,17 @@ class ProfileFragment : Fragment() {
         binding.constraintProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editUserInfoFragment)
         }
+    }
+
+    private fun showBottomViewNavigationBar() {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.VISIBLE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomViewNavigationBar()
+
     }
 }
