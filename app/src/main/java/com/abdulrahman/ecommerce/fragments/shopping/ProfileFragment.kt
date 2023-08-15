@@ -44,6 +44,11 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_addressSettingFragment)
         }
 
+        binding.allOrders.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_ordersFragment)
+        }
+
+
 
         lifecycleScope.launch {
             viewModel.profileImg.collect {

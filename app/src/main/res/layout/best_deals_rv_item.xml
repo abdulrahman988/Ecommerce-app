@@ -29,6 +29,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
+            android:layout_marginStart="@dimen/_10sdp"
             android:maxLines="1"
             app:layout_constraintStart_toEndOf="@id/tvProductImage"
             app:layout_constraintTop_toTopOf="@id/tvProductImage" />
@@ -40,12 +41,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:text="Original Price"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/tvProductDiscountedPrice"
+            app:layout_constraintStart_toStartOf="@+id/tvProductName"
             app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
 
         <TextView
@@ -58,7 +59,7 @@
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvProductOriginalPrice"
-            app:layout_constraintStart_toEndOf="@+id/tvProductImage"
+            app:layout_constraintStart_toStartOf="@+id/tvProductName"
             app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
 
         <Button
@@ -68,6 +69,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
             android:text="See Product"
+            android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

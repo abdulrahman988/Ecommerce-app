@@ -3,6 +3,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -20,9 +21,7 @@
             android:layout_height="@dimen/_80sdp"
             android:src="@drawable/placeholder_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvProductName"
@@ -52,13 +51,14 @@
 
         <Button
             android:id="@+id/btnAddToCartButton"
+            style="@style/firstButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/firstButtonStyle"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:padding="@dimen/_5sdp"
             android:text="Add to Cart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProductPrice" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvProductImage"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

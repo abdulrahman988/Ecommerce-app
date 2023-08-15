@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_profileFragment_to_addressSettingFragment"
             app:destination="@id/addressSettingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -88,4 +91,9 @@
             android:id="@+id/action_addressSettingFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.abdulrahman.ecommerce.fragments.settings.OrdersFragment"
+        android:label="fragment_orders"
+        tools:layout="@layout/fragment_orders" />
 </navigation>
