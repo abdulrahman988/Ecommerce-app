@@ -64,10 +64,9 @@
 
         <Button
             android:id="@+id/btnSeeProduct"
-            style="@style/firstButtonStyle"
+            style="@style/thirdButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_5sdp"
             android:text="See Product"
             android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"

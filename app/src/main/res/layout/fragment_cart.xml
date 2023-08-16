@@ -20,23 +20,23 @@
 
         <ImageView
             android:id="@+id/ivCloseCart"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:scaleType="centerInside"
             android:src="@drawable/close_icon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/black" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/poppins_thin"
-            android:text="My cart"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20ssp"
+            android:text="My Cart"
+            android:textSize="@dimen/_25ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/ivCloseCart"
             app:layout_constraintTop_toTopOf="parent" />
@@ -114,7 +114,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_checkout"
-            style="@style/firstButtonStyle"
+            style="@style/thirdButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginBottom="20dp"

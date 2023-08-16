@@ -29,8 +29,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/close_icon"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tvEditProfile"

@@ -14,23 +14,19 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/smallButtonHeight"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@drawable/back_tabs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@drawable/back_tabs"
-            app:tabIndicatorGravity="stretch"
-            app:tabIndicatorAnimationMode="fade"
-            android:layout_marginStart="@dimen/_5sdp"
-            app:tabIndicatorAnimationDuration="@integer/material_motion_duration_short_1"
-            app:tabIndicatorColor="@color/dark"
             app:tabIndicator="@drawable/back_tabs"
-            android:layout_marginEnd="@dimen/_5sdp"
-            app:tabSelectedTextColor="@color/white"/>
-
-
-
-
+            app:tabIndicatorAnimationDuration="@integer/material_motion_duration_short_1"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorColor="@color/dark"
+            app:tabIndicatorGravity="stretch"
+            app:tabSelectedTextColor="@color/white" />
 
 
         <androidx.viewpager2.widget.ViewPager2

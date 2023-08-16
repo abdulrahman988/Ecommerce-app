@@ -126,7 +126,7 @@
                     android:layout_height="36dp"
                     android:background="@drawable/white_background"
                     android:contentDescription="Decrease Quantity"
-                    android:backgroundTint="@color/navy_blue"
+                    android:backgroundTint="@color/orange"
                     android:padding="8dp"
                     android:src="@drawable/minus_icon" />
 
@@ -145,7 +145,7 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:background="@drawable/white_background"
-                    android:backgroundTint="@color/navy_blue"
+                    android:backgroundTint="@color/orange"
                     android:contentDescription="Increase Quantity"
                     android:padding="8dp"
                     android:src="@drawable/plus_icon" />

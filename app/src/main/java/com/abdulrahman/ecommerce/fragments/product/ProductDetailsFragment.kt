@@ -3,6 +3,7 @@ package com.abdulrahman.ecommerce.fragments.product
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,11 @@ import com.abdulrahman.ecommerce.util.Resource
 import com.abdulrahman.ecommerce.viewmodel.ProductDetailViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -76,6 +82,9 @@ class ProductDetailsFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.addToCart.collect {
                 when (it) {
+                    is Resource.Success -> {
+                        addressAddedSuccefullyDialog()
+                    }
                     is Resource.Error -> {
                         Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
                     }
@@ -88,6 +97,23 @@ class ProductDetailsFragment : Fragment() {
     private fun hideBottomViewNavigationBar(){
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView?.visibility = View.GONE
+    }
+
+    private fun addressAddedSuccefullyDialog() {
+        AestheticDialog.Builder(requireActivity(), DialogStyle.FLAT, DialogType.SUCCESS)
+            .setTitle("Success")
+            .setMessage("Item Added to cart succefully")
+            .setCancelable(false)
+            .setDarkMode(false)
+            .setGravity(Gravity.CENTER)
+            .setAnimation(DialogAnimation.SHRINK)
+            .setOnClickListener(object : OnDialogClickListener {
+                override fun onClick(dialog: AestheticDialog.Builder) {
+                    dialog.dismiss()
+                    findNavController().navigate(R.id.action_productDetailsFragment_to_cartFragment)
+                }
+            })
+            .show()
     }
 }
 

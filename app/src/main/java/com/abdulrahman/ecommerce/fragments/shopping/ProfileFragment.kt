@@ -36,6 +36,9 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.editProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_editUserInfoFragment)
+        }
 
         binding.linearAddress.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_addressSettingFragment)
@@ -45,7 +48,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_ordersFragment)
         }
 
-        binding.linearLogout.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
             viewModel.logout()
             findNavController().navigate(R.id.action_profileFragment_to_introductionFragment)
         }
@@ -84,9 +87,6 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        binding.constraintProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_editUserInfoFragment)
-        }
     }
 
     private fun showBottomViewNavigationBar() {

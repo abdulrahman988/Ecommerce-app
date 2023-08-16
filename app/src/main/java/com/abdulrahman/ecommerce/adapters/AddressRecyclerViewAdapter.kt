@@ -27,7 +27,7 @@ class AddressRecyclerViewAdapter(
 
         if (singleItemSelectedPosition == position) {
             holder.bind(items[position])
-            holder.itemView.setBackgroundResource(R.drawable.dark_background)
+            holder.itemView.setBackgroundResource(R.drawable.orange_round_background)
         } else {
             holder.bind(items[position])
             holder.itemView.setBackgroundResource(R.drawable.white_line)

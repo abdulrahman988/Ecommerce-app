@@ -51,11 +51,10 @@
 
         <Button
             android:id="@+id/btnAddToCartButton"
-            style="@style/firstButtonStyle"
+            style="@style/thirdButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:padding="@dimen/_5sdp"
             android:text="Add to Cart"
             app:layout_constraintBottom_toBottomOf="@+id/tvProductImage"
             app:layout_constraintEnd_toEndOf="parent" />

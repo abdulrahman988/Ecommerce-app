@@ -15,7 +15,6 @@
             android:id="@+id/toolbar_billing"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/navy_blue"
             android:elevation="@dimen/_2sdp"
             app:collapseIcon="@drawable/close_icon"
             app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -24,14 +23,14 @@
 
             <ImageView
                 android:id="@+id/img_billing_close"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:scaleType="centerInside"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/close_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
+                app:tint="@color/black" />
 
 
             <TextView
@@ -39,10 +38,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:fontFamily="@font/poppins_thin"
                 android:text="Billing"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/g_gray500"
+                android:textSize="@dimen/_25ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/img_address_close"
                 app:layout_constraintStart_toEndOf="@id/img_address_close"
@@ -132,12 +132,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_thin"
-            android:text="Products ordered "
+            android:text="Items ordered"
             android:textColor="@color/black"
             android:textSize="@dimen/_15ssp"
             app:drawableTint="@color/black"
             app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/rv_adresses" />
+            app:layout_constraintTop_toBottomOf="@id/rv_adresses"
+            app:drawableStartCompat="@drawable/shopping_cart_icon" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_products"
@@ -227,13 +228,15 @@
                 android:id="@+id/radioButtonOption1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cash on Deliivery" />
+                android:drawableEnd="@drawable/cash"
+                android:text="Cash on Deliivery " />
 
             <RadioButton
                 android:id="@+id/radioButtonOption2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Visa " />
+                android:drawableEnd="@drawable/card"
+                android:text="Card  " />
         </RadioGroup>
 
 

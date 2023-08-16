@@ -36,9 +36,9 @@ class OrderRecyclerViewAdapter :
                 tvOrderCity.text = "${order.address.city}"
                 tvOrderState.text = "${order.address.state}"
                 tvOrderStreet.text = "${order.address.street}"
-                tvOrderPrice.text = "${order.totalPrice}"
-                tvOrderPaymentType.text = "${order.paymentType}"
-                tvOrderDate.text = "${order.createdAt}"
+                tvOrderPrice.text = "Order Price: ${order.totalPrice}$"
+                tvOrderPaymentType.text = "Payment type: ${order.paymentType}"
+                tvOrderDate.text = "Created at: ${order.createdAt}"
             }
         }
     }
