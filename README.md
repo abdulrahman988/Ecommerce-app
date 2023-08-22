@@ -9,6 +9,9 @@ An intuitive ecommerce electronics app where users can easily register/login, br
 - Choose payment method (Cash OR Visa)
 - Add new address and select one as delevery address
 - Show orders history and at what date order created 
+- User can picj profile image from gallery and change personal information
+  
+
 
 ## Libraries and technologies used
 Explain how to install and set up your project. Include any prerequisites, dependencies, or system requirements. Provide step-by-step instructions or commands for a smooth installation process.
@@ -22,6 +25,7 @@ Explain how to install and set up your project. Include any prerequisites, depen
 - [Glide](https://github.com/bumptech/glide) : Catch images and load them in imageView.
 - [Navigation component](https://developer.android.com/guide/navigation) : let users navigate across, into, and back out from the different fragments within your app.
 - [Stripe](https://stripe.com/docs?locale=en-GB) : For Online payments.
+
 
 ## Preview
 ![1](https://github.com/abdulrahman988/Ecommerce-app/assets/119031835/84710e66-b083-4871-9bcb-65616afc0f61)
@@ -43,6 +47,7 @@ Explain how to install and set up your project. Include any prerequisites, depen
 ![16](https://github.com/abdulrahman988/Ecommerce-app/assets/119031835/1d8d5d32-36f5-4a80-aecd-15884253acd9)
 ![17](https://github.com/abdulrahman988/Ecommerce-app/assets/119031835/29d5455b-2e8c-4fce-a170-6a7200ca275b)
 ![18](https://github.com/abdulrahman988/Ecommerce-app/assets/119031835/a8fa4676-c1e1-4633-82a5-d0456685b28b)
+![20](https://github.com/abdulrahman988/Ecommerce-app/assets/119031835/08acfa27-250b-4a17-85f6-50438c92c087)
 
 
 
