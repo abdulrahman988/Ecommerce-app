@@ -9,7 +9,7 @@ An intuitive ecommerce electronics app where users can easily register/login, br
 - Choose payment method (Cash OR Visa)
 - Add new address and select one as delevery address
 - Show orders history and at what date order created 
-- User can picj profile image from gallery and change personal information
+- User can pick profile image from gallery and change personal information
   
 
 
@@ -24,6 +24,7 @@ Explain how to install and set up your project. Include any prerequisites, depen
 - [Kotlin flows](https://developer.android.com/kotlin/flow) : emit multiple values sequentially of the data maintained from firebase firestore.
 - [Glide](https://github.com/bumptech/glide) : Catch images and load them in imageView.
 - [Navigation component](https://developer.android.com/guide/navigation) : let users navigate across, into, and back out from the different fragments within your app.
+- [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) : Handle dependency injection reduces boilerplate code.
 - [Stripe](https://stripe.com/docs?locale=en-GB) : For Online payments.
 
 
